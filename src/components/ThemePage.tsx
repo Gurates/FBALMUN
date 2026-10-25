@@ -63,19 +63,19 @@ export const ThemePage: React.FC<ThemePageProps> = ({ onNavigate }) => {
               Throughout history, the torch has symbolized illumination piercing through the dark of crisis, while fire represents the crucible where disparate interests clash, refine, and coalesce into enduring treaty consensus.
             </p>
             <p className="text-sm sm:text-base text-slate-400 leading-relaxed font-sans">
-              FBMUN 2026 brings this sovereign symbolism to the forefront of international debate. Delegates are challenged not merely to deliver speeches, but to command crisis chambers, de-escalate flashpoints, and forge the historic flame of global diplomacy.
+              MSEMUN 2026 brings this sovereign symbolism to the forefront of international debate. Delegates are challenged not merely to deliver speeches, but to command crisis chambers, de-escalate flashpoints, and forge the historic flame of global diplomacy.
             </p>
           </div>
 
           <div className="lg:col-span-5 flex justify-center">
-            <div className="p-5 sm:p-8 rounded-2xl bg-[#0e0e16] border border-amber-500/30 shadow-2xl flex flex-col items-center text-center w-full max-w-md">
+            <div className="p-8 rounded-2xl bg-[#0e0e16] border border-amber-500/30 shadow-2xl flex flex-col items-center text-center">
               <FlameLogo size="lg" showText={true} glow={true} />
-              <div className="mt-6 pt-6 border-t border-white/8 w-full">
+              <div className="mt-6 pt-6 border-t border-white/8">
                 <p className="font-serif italic text-amber-300 text-sm">
                   "In the crucible of debate, the sovereign flame of peace is forged."
                 </p>
                 <span className="text-[11px] font-mono text-slate-500 mt-2 block">
-                  FBMUN 2026 DIPLOMATIC CHARTER
+                  MSEMUN XXVI DIPLOMATIC CHARTER
                 </span>
               </div>
             </div>
@@ -111,7 +111,7 @@ export const ThemePage: React.FC<ThemePageProps> = ({ onNavigate }) => {
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-white/5 text-[10px] font-mono text-slate-500">
-                    FBMUN ACCREDITATION
+                    MSEMUN ACCREDITATION
                   </div>
                 </div>
               );

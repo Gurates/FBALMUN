@@ -71,12 +71,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
           <div>
-            © {new Date().getFullYear()} FBMUN Model United Nations Conference. {CONFERENCE_INFO.dates} • İzmir.
+            © {new Date().getFullYear()} MSEMUN Model United Nations Conference. {CONFERENCE_INFO.dates} • İzmir.
           </div>
           <div className="flex items-center gap-2.5 text-slate-400">
             <span>Secretariat:</span>
-            <a href="mailto:secretariat@fbmun.org" className="text-amber-400 hover:underline">
-              secretariat@fbmun.org
+            <a href="mailto:secretariat@msemun.org" className="text-amber-400 hover:underline">
+              secretariat@msemun.org
             </a>
             <span className="text-slate-600">•</span>
             <button

@@ -72,11 +72,10 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({
     const deltaY = touchStartY.current - e.changedTouches[0].clientY;
     const deltaX = touchStartX.current - e.changedTouches[0].clientX;
 
-    // Distinguish horizontal swipe (to switch cards) from vertical scroll (to view page)
-    if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
-      if (deltaX > 45) {
+    if (Math.abs(deltaY) > 40 || Math.abs(deltaX) > 40) {
+      if (deltaY > 40 || deltaX > 40) {
         handleNext();
-      } else if (deltaX < -45) {
+      } else if (deltaY < -40 || deltaX < -40) {
         handlePrev();
       }
     }
@@ -160,7 +159,7 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({
           </div>
         </div>
 
-        <div className="relative w-full h-[500px] sm:h-[620px] md:h-[650px] my-auto flex items-center justify-center">
+        <div className="relative w-full h-[550px] sm:h-[620px] md:h-[650px] my-auto flex items-center justify-center">
           
           {COMMITTEES_DATA.map((committee, index) => {
             const diff = index - activeIndex;
@@ -197,11 +196,11 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({
               <div
                 key={committee.id}
                 onClick={() => isFuture && setActiveIndex(index)}
-                className="absolute top-1/2 left-1/2 rounded-2xl p-3.5 sm:p-5 md:p-6 flex flex-col justify-between transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] border border-white/12 shadow-[0_30px_90px_-20px_rgba(0,0,0,0.85)] cursor-pointer overflow-hidden"
+                className="absolute top-1/2 left-1/2 rounded-2xl p-4 sm:p-5 md:p-6 flex flex-col justify-between transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] border border-white/12 shadow-[0_30px_90px_-20px_rgba(0,0,0,0.85)] cursor-pointer overflow-hidden"
                 style={{
-                  width: 'clamp(280px, 94vw, 760px)',
-                  height: 'min(72vh, 620px)',
-                  minHeight: 'clamp(430px, 62vh, 520px)',
+                  width: 'clamp(300px, 92vw, 760px)',
+                  height: 'min(76vh, 620px)',
+                  minHeight: '490px',
                   backgroundImage: committee.gradient || 'linear-gradient(155deg, #1d1d28 0%, #0d0d14 100%)',
                   transform,
                   opacity,
@@ -215,15 +214,15 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({
               >
                 <div className="flex items-center justify-between text-xs tracking-widest uppercase pb-2 sm:pb-2.5 border-b border-white/8 shrink-0">
                   <div className="flex items-center gap-2 sm:gap-3">
-                    <span className="font-serif italic text-lg sm:text-2xl font-bold text-amber-400">
+                    <span className="font-serif italic text-xl sm:text-2xl font-bold text-amber-400">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <span className="font-sans font-bold text-xs sm:text-base tracking-wider text-white">
+                    <span className="font-sans font-bold text-sm sm:text-base tracking-wider text-white">
                       {committee.acronym}
                     </span>
                   </div>
 
-                  <span className="font-mono text-[9px] sm:text-[11px] font-semibold text-slate-200 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-white/8 border border-white/15 backdrop-blur-sm">
+                  <span className="font-mono text-[10px] sm:text-[11px] font-semibold text-slate-200 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-white/8 border border-white/15 backdrop-blur-sm">
                     {committee.level}
                   </span>
                 </div>
@@ -233,7 +232,7 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({
                     e.stopPropagation();
                     setSelectedPosterCommittee(committee);
                   }}
-                  className="relative my-1.5 sm:my-2 w-full flex-1 min-h-[125px] sm:min-h-[160px] max-h-[220px] sm:max-h-[310px] rounded-xl overflow-hidden border border-white/10 bg-[#06060c] group flex items-center justify-center cursor-pointer shrink p-1"
+                  className="relative my-2 w-full flex-1 min-h-[160px] max-h-[290px] sm:max-h-[310px] rounded-xl overflow-hidden border border-white/10 bg-[#06060c] group flex items-center justify-center cursor-pointer shrink p-1"
                   title="Click to view full official poster"
                 >
                   <img
@@ -511,9 +510,9 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({
               />
             </div>
 
-            <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-2 pt-2.5 mt-2 border-t border-white/10">
-              <span className="text-[10px] sm:text-xs font-mono text-slate-400 text-center sm:text-left">
-                Official FBMUN 2026 Promotional Artwork
+            <div className="w-full flex items-center justify-between pt-2.5 mt-2 border-t border-white/10">
+              <span className="text-[10px] sm:text-xs font-mono text-slate-400">
+                Official MSEMUN XXVI Promotional Artwork
               </span>
               <button
                 type="button"
@@ -522,7 +521,7 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({
                   setSelectedPosterCommittee(null);
                   handleApplyClick(comm);
                 }}
-                className="btn-primary text-[11px] sm:text-xs !py-2 !px-4 sm:!px-6 !rounded-lg w-full sm:w-auto"
+                className="btn-primary text-[11px] sm:text-xs !py-2 !px-4 sm:!px-6 !rounded-lg"
               >
                 <span>APPLY FOR {selectedPosterCommittee.acronym}</span>
                 <ArrowRight className="w-3.5 h-3.5 ml-1" />

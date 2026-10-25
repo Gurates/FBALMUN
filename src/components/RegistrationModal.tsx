@@ -38,8 +38,8 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-black/85 backdrop-blur-xl">
-      <div className="relative w-full max-w-2xl rounded-2xl bg-[#0d0d15] border border-white/10 p-4 sm:p-8 shadow-2xl my-auto max-h-[94vh] overflow-y-auto modal-scrollbar">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/85 backdrop-blur-xl">
+      <div className="relative w-full max-w-2xl rounded-2xl bg-[#0d0d15] border border-white/10 p-6 sm:p-8 shadow-2xl my-8">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-colors"

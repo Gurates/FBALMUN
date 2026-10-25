@@ -43,7 +43,7 @@ export const Hero: React.FC<HeroProps> = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center pt-28 sm:pt-36 pb-16 sm:pb-20 overflow-hidden cinematic-grid"
+      className="relative min-h-screen flex flex-col justify-center pt-36 pb-20 overflow-hidden cinematic-grid"
       data-scroll-section="hero"
     >
       <EmbersCanvas />
@@ -67,20 +67,20 @@ export const Hero: React.FC<HeroProps> = () => {
           <FlameLogo size="hero" showText={true} glow={true} />
         </div>
 
-        <div className="max-w-4xl mx-auto mb-6 px-2">
-          <p className="text-[11px] sm:text-xs md:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.35em] text-amber-500/90 uppercase font-sans mb-3 flex items-center justify-center gap-2 sm:gap-3">
-            <span className="w-6 sm:w-8 h-[1px] bg-gradient-to-r from-transparent to-amber-500/60" />
+        <div className="max-w-4xl mx-auto mb-6">
+          <p className="text-xs md:text-sm font-semibold tracking-[0.35em] text-amber-500/90 uppercase font-sans mb-3 flex items-center justify-center gap-3">
+            <span className="w-8 h-[1px] bg-gradient-to-r from-transparent to-amber-500/60" />
             THE FLAME OF RESOLUTION
-            <span className="w-6 sm:w-8 h-[1px] bg-gradient-to-l from-transparent to-amber-500/60" />
+            <span className="w-8 h-[1px] bg-gradient-to-l from-transparent to-amber-500/60" />
           </p>
-          <h1 className="font-serif text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.08] text-white">
+          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.05] text-white">
             IGNITING GLOBAL <br />
             <span className="flame-gradient-text">DIPLOMACY</span>
           </h1>
         </div>
 
         <p
-          className="max-w-2xl mx-auto text-sm sm:text-lg text-slate-300 leading-relaxed font-sans mb-8 font-normal px-2"
+          className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed font-sans mb-8 font-normal"
         >
           {CONFERENCE_INFO.subheading}
         </p>

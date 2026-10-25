@@ -90,11 +90,11 @@ export const Committees: React.FC<{ onSelectCommittee?: (c: Committee) => void }
           </div>
 
           <div className="lg:col-span-7">
-            <div className="p-5 sm:p-8 md:p-10 rounded-2xl bg-[#0f0f18] border border-white/10 relative overflow-hidden shadow-2xl">
+            <div className="p-8 sm:p-10 rounded-2xl bg-[#0f0f18] border border-white/10 relative overflow-hidden shadow-2xl">
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 sm:pb-6 mb-5 sm:mb-6 border-b border-white/8">
+              <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/8">
                 <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-[#C86868] animate-ping" />
+                  <div className="w-3 h-3 rounded-full bg-orange-500 animate-ping" />
                   <span className="font-mono text-xs text-amber-400 tracking-widest uppercase">
                     CHAMBER DOSSIER // {activeCommittee.acronym}
                   </span>
@@ -105,38 +105,38 @@ export const Committees: React.FC<{ onSelectCommittee?: (c: Committee) => void }
                 </div>
               </div>
 
-              <div className="mb-6 sm:mb-8">
-                <span className="text-[11px] sm:text-xs font-mono tracking-widest text-slate-400 uppercase">
+              <div className="mb-8">
+                <span className="text-xs font-mono tracking-widest text-slate-400 uppercase">
                   Full Committee Title
                 </span>
-                <h3 className="font-serif text-xl sm:text-3xl font-bold text-white mt-1 mb-3 sm:mb-4">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white mt-1 mb-4">
                   {activeCommittee.name}
                 </h3>
                 
-                <div className="p-3.5 sm:p-4 rounded-xl bg-[#161624] border-l-2 border-amber-500 mb-5 sm:mb-6">
-                  <span className="text-[10px] sm:text-[11px] font-mono text-amber-400 uppercase tracking-wider block mb-1">
+                <div className="p-4 rounded-xl bg-[#161624] border-l-2 border-amber-500 mb-6">
+                  <span className="text-[11px] font-mono text-amber-400 uppercase tracking-wider block mb-1">
                     Official Agenda Topic
                   </span>
-                  <p className="text-xs sm:text-base font-medium text-slate-200 leading-relaxed">
+                  <p className="text-sm sm:text-base font-medium text-slate-200 leading-relaxed">
                     "{activeCommittee.agenda}"
                   </p>
                 </div>
 
-                <p className="text-xs sm:text-base text-slate-300 leading-relaxed font-sans">
+                <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
                   {activeCommittee.description}
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-5 sm:pt-6 border-t border-white/8 mb-6 sm:mb-8">
-                <div className="p-3 sm:p-3.5 rounded-lg bg-white/3 border border-white/5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-white/8 mb-8">
+                <div className="p-3.5 rounded-lg bg-white/3 border border-white/5">
                   <span className="text-[10px] font-mono uppercase text-slate-500 block mb-1">Chamber Directorate</span>
                   <span className="text-xs font-semibold text-white">{activeCommittee.president}</span>
                 </div>
-                <div className="p-3 sm:p-3.5 rounded-lg bg-white/3 border border-white/5">
+                <div className="p-3.5 rounded-lg bg-white/3 border border-white/5">
                   <span className="text-[10px] font-mono uppercase text-slate-500 block mb-1">Seat Capacity</span>
                   <span className="text-xs font-semibold text-amber-400">{activeCommittee.seats} Selected Delegates</span>
                 </div>
-                <div className="p-3 sm:p-3.5 rounded-lg bg-white/3 border border-white/5 sm:col-span-1">
+                <div className="p-3.5 rounded-lg bg-white/3 border border-white/5 col-span-2 sm:col-span-1">
                   <span className="text-[10px] font-mono uppercase text-slate-500 block mb-1">Debate Intensity</span>
                   <span className="text-xs font-semibold text-orange-400">{activeCommittee.level} Level</span>
                 </div>

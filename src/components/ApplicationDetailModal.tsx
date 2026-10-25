@@ -720,7 +720,7 @@ export const ApplicationDetailModal: React.FC<ApplicationDetailModalProps> = ({
                       </div>
                       <div className="font-semibold text-white truncate text-sm">{senderName}</div>
                       <div className="text-amber-300 font-mono text-[11px] truncate">{senderEmail}</div>
-                      <div className="text-[10px] text-slate-500 mt-0.5">{senderEmail} (SMTP)</div>
+                      <div className="text-[10px] text-slate-500 mt-0.5">msemun26@gmail.com (SMTP)</div>
                     </div>
                   </div>
 
