@@ -186,9 +186,9 @@ export const HomePage: React.FC<HomePageProps> = ({
       </div>
 
       <div 
-        className="relative z-10 w-full flex flex-col items-center px-4"
+        className="relative z-10 w-full flex flex-col items-center px-3 sm:px-4"
         style={{
-          paddingTop: 'clamp(52vh, 58vh, 62vh)',
+          paddingTop: 'clamp(38vh, 44vh, 58vh)',
           position: 'relative',
           zIndex: 10
         }}
@@ -230,12 +230,12 @@ export const HomePage: React.FC<HomePageProps> = ({
                 pointerEvents: isApplyActive ? 'auto' : 'none',
                 transition: 'opacity 0.25s ease-out, transform 0.25s ease-out'
               }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full"
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full px-4"
             >
               <button
                 type="button"
                 onClick={() => onNavigate('apply')}
-                className="btn-primary group flex items-center justify-center gap-3 text-sm sm:text-base !py-3.5 sm:!py-4 !px-9 sm:!px-12 !rounded-xl shadow-[0_0_40px_rgba(74,14,20,0.75)] hover:shadow-[0_0_60px_rgba(200,104,104,0.65)] hover:scale-105 transition-all duration-300 cursor-pointer"
+                className="btn-primary group flex items-center justify-center gap-3 text-sm sm:text-base !py-3.5 sm:!py-4 !px-6 sm:!px-12 w-full sm:w-auto max-w-xs sm:max-w-none !rounded-xl shadow-[0_0_40px_rgba(74,14,20,0.75)] hover:shadow-[0_0_60px_rgba(200,104,104,0.65)] hover:scale-105 transition-all duration-300 cursor-pointer"
                 style={{
                   cursor: 'pointer',
                   position: 'relative',
@@ -249,7 +249,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigate('committees')}
-                className="btn-secondary group flex items-center justify-center gap-2 text-sm sm:text-base !py-3.5 sm:!py-4 !px-7 sm:!px-9 !rounded-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                className="btn-secondary group flex items-center justify-center gap-2 text-sm sm:text-base !py-3.5 sm:!py-4 !px-5 sm:!px-9 w-full sm:w-auto max-w-xs sm:max-w-none !rounded-xl hover:scale-105 transition-all duration-300 cursor-pointer"
                 style={{
                   cursor: 'pointer',
                   position: 'relative',
@@ -342,7 +342,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <div className="text-center pt-16 pb-14 border-t border-amber-500/15 mt-16">
               <p className="text-[11px] font-mono text-slate-400 uppercase tracking-widest">
-                MSEMUN XXVI // MODEL UNITED NATIONS • ALL RIGHTS RESERVED
+                FBMUN 2026 // MODEL UNITED NATIONS • ALL RIGHTS RESERVED
               </p>
             </div>
           </div>

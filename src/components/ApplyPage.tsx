@@ -291,7 +291,7 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
             <CheckCircle className="w-16 h-16 text-[#00b4d8] mb-6" />
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 font-serif">Application Submitted!</h2>
             <p className="text-sm text-slate-300 font-sans leading-relaxed mb-8 max-w-md">
-              Thank you for applying to MSEMUN 2026. We have received your application and will evaluate it carefully.
+              Thank you for applying to FBMUN 2026. We have received your application and will evaluate it carefully.
             </p>
             <button
               onClick={() => {
@@ -386,7 +386,7 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
               </button>
 
               <span className="font-mono text-xs text-slate-400 uppercase">
-                MSEMUN '26 // {activeRole.toUpperCase()}
+                FBMUN '26 // {activeRole.toUpperCase()}
               </span>
             </div>
 
@@ -404,7 +404,7 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
             </div>
 
             {activeRole === 'delegate' && (
-              <div className="p-6 sm:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
+              <div className="p-4 sm:p-8 md:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
                 <div className="text-center mb-8 pb-6 border-b border-white/10">
                   <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 font-serif">Delegate Application</h1>
                   <p className="text-xs sm:text-sm text-slate-400">Represent a nation in one of our committees. Please fill out the application form carefully.</p>
@@ -568,7 +568,7 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
                     <h3 className="text-base sm:text-lg font-bold text-white mb-4">Motivation Letter *</h3>
                     <div>
                       <label className="block text-xs text-slate-300 mb-1.5 font-medium">
-                        Why do you want to attend MSEMUN 2026? What do you hope to gain from the experience?
+                        Why do you want to attend FBMUN 2026? What do you hope to gain from the experience?
                       </label>
                       <textarea
                         rows={6}
@@ -635,10 +635,10 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
             )}
 
             {activeRole === 'delegation' && (
-              <div className="p-6 sm:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
+              <div className="p-4 sm:p-8 md:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
                 <div className="text-center mb-8 pb-6 border-b border-white/10">
                   <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 font-serif">Delegation Registration</h1>
-                  <p className="text-xs sm:text-sm text-slate-400">Register your school's delegation and bring your team to MSEMUN '26.</p>
+                  <p className="text-xs sm:text-sm text-slate-400">Register your school's delegation and bring your team to FBMUN '26.</p>
                 </div>
 
                 <form 
@@ -798,7 +798,7 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
             )}
 
             {activeRole === 'chairboard' && (
-              <div className="p-6 sm:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
+              <div className="p-4 sm:p-8 md:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
                 <div className="text-center mb-8 pb-6 border-b border-white/10">
                   <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 font-serif">Chairboard Registration</h1>
                   <p className="text-xs sm:text-sm text-slate-400">Apply to chair a committee and lead discussions.</p>
@@ -971,7 +971,7 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
                         rows={6}
                         value={chairboardForm.motivationLetter}
                         onChange={(e) => setChairboardForm({ ...chairboardForm, motivationLetter: e.target.value })}
-                        placeholder="Why do you want to chair at MSEMUN? Describe your leadership style and what you bring to the committee."
+                        placeholder="Why do you want to chair at FBMUN? Describe your leadership style and what you bring to the committee."
                         maxLength={5000}
                         className={`w-full px-4 py-2.5 rounded-lg bg-black/40 border text-sm text-white focus:outline-none ${errors.motivationLetter ? 'border-red-500' : 'border-white/12 focus:border-amber-500'}`}
                       />
@@ -1129,7 +1129,7 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
             )}
 
             {activeRole === 'admin' && (
-              <div className="p-6 sm:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
+              <div className="p-4 sm:p-8 md:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
                 <div className="text-center mb-8 pb-6 border-b border-white/10">
                   <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 font-serif">Admin Staff Registration</h1>
                   <p className="text-xs sm:text-sm text-slate-400">Join our organising team behind the scenes.</p>
@@ -1276,10 +1276,10 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
             )}
 
             {activeRole === 'press' && (
-              <div className="p-6 sm:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
+              <div className="p-4 sm:p-8 md:p-10 rounded-2xl bg-[#0c0c14]/95 border border-white/10 shadow-2xl backdrop-blur-xl">
                 <div className="text-center mb-8 pb-6 border-b border-white/10">
                   <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 font-serif">Press Corps Registration</h1>
-                  <p className="text-xs sm:text-sm text-slate-400">Cover MSEMUN '26 as a journalist or photographer.</p>
+                  <p className="text-xs sm:text-sm text-slate-400">Cover FBMUN '26 as a journalist or photographer.</p>
                 </div>
 
                 <form 

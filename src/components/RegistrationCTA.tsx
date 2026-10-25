@@ -78,21 +78,21 @@ export const RegistrationCTA: React.FC<RegistrationCTAProps> = ({ onRegisterClic
 
           <button
             onClick={onRegisterClick}
-            className="btn-primary text-sm px-10 py-4 shadow-2xl"
+            className="btn-primary text-xs sm:text-sm px-6 sm:px-10 py-3.5 sm:py-4 shadow-2xl w-full sm:w-auto max-w-xs sm:max-w-none"
           >
             <span>APPLY FOR DELEGATION NOW</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {tiers.map((tier, idx) => {
             const Icon = tier.icon;
             const isMiddle = idx === 1;
             return (
               <div
                 key={tier.name}
-                className={`relative p-8 rounded-2xl flex flex-col justify-between transition-all duration-400 ${
+                className={`relative p-5 sm:p-8 rounded-2xl flex flex-col justify-between transition-all duration-400 ${
                   isMiddle
                     ? 'bg-[#180a0d] border-2 border-[#C86868]/60 shadow-[0_8px_35px_rgba(74,14,20,0.5)]'
                     : 'bg-[#0b0b12] border border-white/8 hover:border-white/20'

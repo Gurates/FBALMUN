@@ -39,21 +39,21 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           isSolid
-            ? 'py-3.5 bg-[#060608]/96 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/80'
-            : 'py-5 bg-transparent'
+            ? 'py-2.5 sm:py-3.5 bg-[#060608]/96 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/80'
+            : 'py-3.5 sm:py-5 bg-transparent'
         }`}
       >
         <div className="section-container">
           <div className="flex items-center justify-between">
             <button
               onClick={() => handleNavClick('home')}
-              className="flex items-center gap-3 bg-transparent border-0 cursor-pointer p-0 group text-left"
+              className="flex items-center gap-2.5 sm:gap-3 bg-transparent border-0 cursor-pointer p-0 group text-left"
               style={{ background: 'none', border: 'none', outline: 'none' }}
             >
               <FlameLogo size="sm" showText={false} glow={true} />
-              <div className="flex items-center gap-2">
-                <span className="font-serif text-2xl font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors">
-                  FBMUN
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors">
+                  FBALMUN
                 </span>
                 <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">
                   '26

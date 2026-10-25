@@ -24,7 +24,11 @@ export const FlameLogo: React.FC<FlameLogoProps> = ({
   return (
     <div
       className={`relative inline-flex items-center justify-center select-none ${className}`}
-      style={{ width, height }}
+      style={{
+        width: size === 'hero' ? 'clamp(180px, 56vw, 260px)' : width,
+        height: size === 'hero' ? 'clamp(180px, 56vw, 260px)' : height,
+        maxWidth: '100%'
+      }}
       data-flame-focal="true"
     >
       {glow && (

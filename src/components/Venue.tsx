@@ -41,21 +41,21 @@ export const Venue: React.FC = () => {
           className="relative rounded-2xl overflow-hidden border border-white/10 mb-16 shadow-2xl group"
           data-animate="venue-image"
         >
-          <div className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden bg-[#0c0c14]">
+          <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden bg-[#0c0c14]">
             <img
               src="/venue.jpg"
               alt="The Imperial Congress Palace, Izmir"
               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#09090f] via-[#09090f]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#09090f] via-[#09090f]/50 to-transparent" />
             
-            <div className="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-              <div className="bg-black/60 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-white/10 max-w-xl">
+            <div className="absolute bottom-3.5 sm:bottom-6 left-3.5 sm:left-6 right-3.5 sm:right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4">
+              <div className="bg-black/75 backdrop-blur-md p-3.5 sm:p-5 rounded-xl border border-white/10 max-w-xl">
                 <div className="flex items-center gap-2 text-amber-400 text-xs font-mono mb-1">
                   <MapPin className="w-3.5 h-3.5" />
                   <span>ALSANCAK, KONAK, İZMİR</span>
                 </div>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white">
+                <h3 className="font-serif text-base sm:text-2xl font-bold text-white leading-snug">
                   Historic Waterfront Plenary & Chambers
                 </h3>
               </div>
@@ -64,7 +64,7 @@ export const Venue: React.FC = () => {
                 href="https://maps.google.com"
                 target="_blank"
                 rel="noreferrer"
-                className="btn-secondary text-xs py-3 px-5 self-start sm:self-auto bg-black/70 backdrop-blur-md border-white/20 hover:border-amber-400"
+                className="btn-secondary text-xs py-2.5 sm:py-3 px-4 sm:px-5 self-start sm:self-auto bg-black/70 backdrop-blur-md border-white/20 hover:border-amber-400"
                 style={{ textDecoration: 'none' }}
               >
                 <Navigation className="w-3.5 h-3.5 text-amber-400" />

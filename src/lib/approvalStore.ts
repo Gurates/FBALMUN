@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'msemun_approved_applications';
+const STORAGE_KEY = 'fbmun_approved_applications';
 
 export type ApplicationStatus = 'approved' | 'rejected' | 'waitlist' | 'pending';
 
@@ -24,7 +24,7 @@ export const getApprovedMap = (): Record<string, ApprovalRecord> => {
 export const markApplicationStatus = (
   id: string,
   email: string,
-  sender: string = 'msemun26@gmail.com',
+  sender: string = 'info@fbmun.org',
   status: ApplicationStatus = 'approved'
 ) => {
   try {
@@ -43,15 +43,15 @@ export const markApplicationStatus = (
   }
 };
 
-export const markApplicationApproved = (id: string, email: string, sender: string = 'msemun26@gmail.com') => {
+export const markApplicationApproved = (id: string, email: string, sender: string = 'info@fbmun.org') => {
   markApplicationStatus(id, email, sender, 'approved');
 };
 
-export const markApplicationRejected = (id: string, email: string, sender: string = 'msemun26@gmail.com') => {
+export const markApplicationRejected = (id: string, email: string, sender: string = 'info@fbmun.org') => {
   markApplicationStatus(id, email, sender, 'rejected');
 };
 
-export const markApplicationWaitlist = (id: string, email: string, sender: string = 'msemun26@gmail.com') => {
+export const markApplicationWaitlist = (id: string, email: string, sender: string = 'info@fbmun.org') => {
   markApplicationStatus(id, email, sender, 'waitlist');
 };
 

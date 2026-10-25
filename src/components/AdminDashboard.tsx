@@ -472,7 +472,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
     const link = document.createElement('a');
     link.setAttribute('href', url);
     const fileSuffix = activeTab === 'all' ? 'tum_basvurular' : activeTab;
-    link.setAttribute('download', `msemun_${fileSuffix}_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `fbmun_${fileSuffix}_${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -540,7 +540,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
                 type="email"
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
-                placeholder="admin@msemun.org"
+                placeholder="admin@fbmun.org"
                 autoFocus
                 required
                 className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition-colors"
