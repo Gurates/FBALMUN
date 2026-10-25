@@ -1,0 +1,126 @@
+import React, { useState, useEffect } from 'react';
+import { Navbar, PageView } from './components/Navbar';
+import { HomePage } from './components/HomePage';
+import { CommitteesPage } from './components/CommitteesPage';
+import { ApplyPage } from './components/ApplyPage';
+import { AdminDashboard } from './components/AdminDashboard';
+import { VideoIntro } from './components/VideoIntro';
+
+export const App: React.FC = () => {
+  const getInitialPage = (): PageView => {
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    if (path.includes('/admin') || hash.includes('admin')) {
+      return 'admin';
+    }
+    if (path.includes('/committees') || hash.includes('committees')) {
+      return 'committees';
+    }
+    if (path.includes('/apply') || hash.includes('apply')) {
+      return 'apply';
+    }
+    return 'home';
+  };
+
+  const initialPage = getInitialPage();
+
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    if (initialPage === 'admin') return false;
+    try {
+      return sessionStorage.getItem('fbmun_intro_played') !== 'true';
+    } catch {
+      return true;
+    }
+  });
+
+  const [currentPage, setCurrentPage] = useState<PageView>(initialPage);
+  const [selectedCommitteeForApply, setSelectedCommitteeForApply] = useState<string>('unwomen');
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const page = getInitialPage();
+      setCurrentPage(page);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('hashchange', handlePopState);
+    };
+  }, []);
+
+  const handleIntroComplete = () => {
+    try {
+      sessionStorage.setItem('fbmun_intro_played', 'true');
+    } catch (e) {
+      console.warn('sessionStorage error:', e);
+    }
+    setShowIntro(false);
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 150);
+  };
+
+  const handleNavigate = (page: PageView) => {
+    setCurrentPage(page);
+    const targetUrl = page === 'home' ? '/' : `/${page}`;
+    if (window.location.pathname !== targetUrl) {
+      window.history.pushState({}, '', targetUrl);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectCommitteeForApply = (committeeId: string) => {
+    setSelectedCommitteeForApply(committeeId);
+  };
+
+  const isIntroActive = showIntro && currentPage !== 'admin';
+
+  return (
+    <div className="min-h-screen bg-[#060608] text-[#f8fafc] flex flex-col">
+      {isIntroActive && (
+        <VideoIntro onComplete={handleIntroComplete} />
+      )}
+
+      <div 
+        className={`flex flex-col flex-grow transition-opacity duration-1000 ${
+          isIntroActive ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+        }`}
+        style={{
+          transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1)'
+        }}
+      >
+        {currentPage !== 'admin' && (
+          <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
+        )}
+
+        <main className="flex-grow">
+          {currentPage === 'home' && (
+            <HomePage onNavigate={handleNavigate} />
+          )}
+
+          {currentPage === 'committees' && (
+            <CommitteesPage
+              onNavigate={handleNavigate}
+              onSelectCommitteeForApply={handleSelectCommitteeForApply}
+            />
+          )}
+
+          {currentPage === 'apply' && (
+            <ApplyPage
+              initialCommitteeId={selectedCommitteeForApply}
+              onNavigate={handleNavigate}
+            />
+          )}
+
+          {currentPage === 'admin' && (
+            <AdminDashboard onNavigate={handleNavigate} />
+          )}
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default App;
