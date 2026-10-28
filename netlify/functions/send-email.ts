@@ -89,7 +89,7 @@ export const handler = async (event: any) => {
 
     const cleanPass = rawPass ? rawPass.trim().replace(/\s+/g, '') : '';
     const senderEmail = process.env.VITE_SENDER_EMAIL || smtpUser || 'msemun26@gmail.com';
-    const senderName = process.env.VITE_SENDER_NAME || 'MSEMUN Secretariat';
+    const senderName = process.env.VITE_SENDER_NAME || 'FBALMUN Secretariat';
     const resendApiKey = process.env.RESEND_API_KEY || process.env.VITE_RESEND_API_KEY;
 
     // Option 1: Resend API

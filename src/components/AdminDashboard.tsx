@@ -472,7 +472,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
     const link = document.createElement('a');
     link.setAttribute('href', url);
     const fileSuffix = activeTab === 'all' ? 'tum_basvurular' : activeTab;
-    link.setAttribute('download', `msemun_${fileSuffix}_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `fbalmun_${fileSuffix}_${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -525,7 +525,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
             <div className="mb-3">
               <FlameLogo size="md" glow={true} />
             </div>
-            <h1 className="text-2xl font-bold text-white font-serif">FBMUN Sekretaryası</h1>
+            <h1 className="text-2xl font-bold text-white font-serif">FBALMUN Sekretaryası</h1>
             <p className="text-xs text-slate-400 mt-1 max-w-xs">
               Yetkili yönetim portalı. Başvuruları görüntülemek ve onay maillerini yönetmek için yönetici hesabınızla giriş yapınız.
             </p>
@@ -540,7 +540,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
                 type="email"
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
-                placeholder="admin@msemun.org"
+                placeholder="Admin email address"
                 autoFocus
                 required
                 className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition-colors"
@@ -603,7 +603,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
               <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-amber-400/20 text-amber-300 border border-amber-400/30">
                 Sekretarya Yönetim Paneli
               </span>
-              <span className="text-xs text-slate-400 font-mono">FBMUN '26</span>
+              <span className="text-xs text-slate-400 font-mono">FBALMUN '26</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white font-serif tracking-tight">
               Gelen Başvurular & Onay Yönetimi

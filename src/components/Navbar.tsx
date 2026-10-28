@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlameLogo } from './FlameLogo';
-import { Menu, X } from 'lucide-react';
+import { Menu, Music2, X } from 'lucide-react';
+import { SongRequestModal } from './SongRequestModal';
 
 export type PageView = 'home' | 'committees' | 'apply' | 'admin';
 
@@ -12,6 +13,12 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [songModalOpen, setSongModalOpen] = useState(false);
+
+  const openSongRequest = () => {
+    setMobileMenuOpen(false);
+    setSongModalOpen(true);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                 <span className="font-serif text-2xl font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors">
                   FBALMUN
                 </span>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                <span className="text-[10px] font-mono font-semibold text-amber-400">
                   '26
                 </span>
               </div>
@@ -94,6 +101,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                   );
                 })}
               </div>
+              <button type="button" className="nav-song-button" onClick={openSongRequest} aria-haspopup="dialog">
+                <Music2 size={16} /> Choose Your Song
+              </button>
             </nav>
 
             <button
@@ -136,13 +146,15 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           </div>
 
           <button
-            onClick={() => handleNavClick('apply')}
-            className="btn-primary w-full text-center text-sm py-3.5 mt-4"
+            onClick={openSongRequest}
+            className="btn-primary w-full text-center text-sm py-3.5 mt-4 song-menu-button"
+            aria-haspopup="dialog"
           >
-            APPLY AS DELEGATE
+            <Music2 size={18} /> CHOOSE YOUR SONG
           </button>
         </div>
       </div>
+      {songModalOpen && <SongRequestModal onClose={() => setSongModalOpen(false)} />}
     </>
   );
 };

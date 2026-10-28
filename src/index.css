@@ -920,3 +920,112 @@ input, select, textarea {
 .focus\:border-amber-400:focus { border-color: #C86868; }
 .focus\:border-theatre:focus { border-color: #C86868; }
 .hover\:scale-105:hover { transform: scale(1.05); }
+
+/* The opening stage uses CSS fabric, so no background logo or image is needed. */
+.theatre-home { --curtain-progress: 0; --letter-opacity: 0; --curtain-sway: 0deg; position: relative; isolation: isolate; overflow: clip; background: #090607; color: #fff; }
+.theatre-backdrop { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: #090607; }
+.theatre-spotlight { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 5%, #6b303533, transparent 65%), radial-gradient(ellipse at 50% 90%, #c8686812, transparent 60%); }
+.curtain-definitions { position: absolute; overflow: hidden; }
+.theatre-curtain { position: absolute; top: 0; bottom: -3%; width: 50.7%; will-change: transform; clip-path: url(#curtain-fabric-clip); background: linear-gradient(180deg, #09020499, transparent 25%, #09020499 95%), repeating-linear-gradient(92deg, #20040a 0%, #490d19 3%, #7d2333 5.5%, #5b1221 7%, #29050e 10%, #160207 12%, #3c0a16 15%); filter: drop-shadow(8px 0 12px #0009); }
+.theatre-curtain::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, #ffffff03 0 1px, transparent 1px 3px), radial-gradient(ellipse at 95% 55%, #e08c8c22, transparent 45%); opacity: .7; }
+.theatre-curtain::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 45% 8%, #e08c8c30, transparent 65%), linear-gradient(100deg, transparent 65%, #10010788 94%, #d68c7866 99%, #160207 100%); transform-origin: top left; transform: skewY(calc(var(--curtain-sway) * -1)); }
+.theatre-curtain-left { left: 0; transform-origin: top left; transform: translate3d(calc(var(--curtain-progress) * -18%), 0, 0) scaleX(calc(1 - var(--curtain-progress) * .6)) skewY(var(--curtain-sway)); }
+.theatre-curtain-right { right: 0; clip-path: url(#curtain-fabric-clip-right); transform-origin: top right; transform: translate3d(calc(var(--curtain-progress) * 18%), 0, 0) scaleX(calc(1 - var(--curtain-progress) * .6)) skewY(calc(var(--curtain-sway) * -1)); }
+.theatre-curtain-right::after { scale: -1 1; }
+.theatre-valance { position: absolute; top: 0; width: 100%; height: 85px; background: linear-gradient(#160308, #4a0e19 60%, #24050c); border-bottom: 2px solid #c8686838; border-radius: 0 0 50% 50%; box-shadow: 0 15px 35px #0009; }
+.theatre-hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 150px 20px 40px; }
+.theatre-eyebrow { color: #dfa9a5; font-size: 10px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; line-height: 1.8; }
+.theatre-hero h1 { font-family: var(--font-serif); font-size: clamp(44px, 8.5vw, 112px); font-weight: 600; line-height: 1.15; letter-spacing: .06em; text-shadow: 0 3px 30px #0008; margin: 25px 0 16px; }
+.theatre-hero h1 span { display: block; font-family: var(--font-sans); font-size: 15px; letter-spacing: .65em; color: #e8b3af; margin-top: 12px; }
+.theatre-tagline { font-family: Georgia, serif; font-style: italic; font-size: clamp(17px, 2.4vw, 25px); color: #ecd5d0; }
+.theatre-countdown.countdown-container { margin: 36px 0 28px; padding: 16px 20px; border: 1px solid #e08c8c33; background: #10070bbf; border-radius: 12px; backdrop-filter: blur(8px); }
+.theatre-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.theatre-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 11px; padding: 15px 22px; cursor: pointer; }
+.theatre-scroll { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 38px; padding: 12px; color: #efc7c0; font-size: 9px; letter-spacing: .2em; cursor: pointer; }
+.conference-letters, .home-location { width: min(1100px, calc(100% - 40px)); margin: 0 auto; padding: 90px 0; }
+.conference-letters { scroll-margin-top: 95px; }
+.letters-reveal { opacity: var(--letter-opacity); transform: translateY(calc((1 - var(--letter-opacity)) * 35px)); }
+.conference-letters > div > .theatre-eyebrow, .conference-letters h2 { text-align: center; }
+.conference-letters h2, .home-location h2 { font-family: var(--font-serif); font-weight: 500; font-size: clamp(27px, 4vw, 44px); line-height: 1.4; margin: 14px 0 42px; }
+.conference-letter-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+.conference-letter { padding: clamp(25px, 4vw, 44px); border: 1px solid #c8686830; border-top: 2px solid #a8535e; border-radius: 4px; background: linear-gradient(145deg, #281017ef, #120c10f5); box-shadow: 0 20px 50px #0003; }
+.letter-number { font-size: 9px; letter-spacing: .2em; color: #d69b99; }
+.conference-letter h3 { font-family: Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.25; margin: 24px 0 30px; }
+.conference-letter p { color: #ddcfd2; font-size: 14px; line-height: 1.95; margin-bottom: 18px; }
+.letter-signature { border-top: 1px solid #c8686826; padding-top: 24px; margin-top: 28px; font-family: Georgia, serif; font-style: italic; font-size: 30px; color: #f5dad4; }
+.letter-signature span { display: block; margin-top: 8px; font-family: var(--font-sans); font-style: normal; font-size: 10px; letter-spacing: .1em; color: #ba939a; }
+.home-highlights { width: min(1100px, calc(100% - 40px)); margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.home-highlight { display: flex; flex-direction: column; align-items: flex-start; gap: 15px; text-align: left; padding: 28px; background: #170e13; border: 1px solid #c8686826; border-radius: 8px; color: #d99898; }
+button.home-highlight { cursor: pointer; transition: background .2s, border-color .2s; }
+button.home-highlight:hover { background: #29131d; border-color: #c8686866; }
+.home-highlight h3 { color: #fff; font-family: var(--font-serif); font-size: 17px; }
+.home-highlight p { color: #c7b5bc; font-size: 13px; line-height: 1.8; }
+.home-location { text-align: center; padding-top: 110px; }
+.home-location h2 { max-width: 670px; margin-left: auto; margin-right: auto; }
+.home-map-link { display: block; overflow: hidden; border: 1px solid #c8686840; border-radius: 12px; text-align: left; background: #170e13; transition: border-color .2s; }
+.home-map-link:hover { border-color: #c86868; }
+.home-map-art { height: 220px; display: grid; place-items: center; background: radial-gradient(ellipse at 25% 80%, #38566688 0%, #24364499 23%, transparent 24%), repeating-linear-gradient(25deg, transparent 0 55px, #c8686815 56px 59px, transparent 60px 110px), repeating-linear-gradient(115deg, #160e13 0 65px, #c8686822 66px 68px, #160e13 69px 115px); }
+.map-pin-halo { display: grid; place-items: center; width: 85px; height: 85px; border-radius: 50%; color: #f6d8d8; border: 1px solid #c8686866; background: #4a0e14db; box-shadow: 0 0 0 18px #c8686810, 0 8px 40px #0008; }
+.home-map-caption { display: flex; justify-content: space-between; align-items: center; gap: 22px; padding: 28px; }
+.home-map-caption > div > span { color: #d69b99; letter-spacing: .2em; font-size: 9px; }
+.home-map-caption h3 { font-family: var(--font-serif); font-size: 25px; margin: 8px 0; }
+.home-map-caption p { font-size: 12px; color: #c7b5bc; }
+.map-open { display: flex; align-items: center; gap: 10px; font-size: 10px; letter-spacing: .1em; color: #efc7c0; }
+.home-footer { padding: 28px 20px; border-top: 1px solid #c8686820; font-size: 9px; letter-spacing: .15em; color: #b497a1; text-align: center; line-height: 1.8; }
+.theatre-home button:focus-visible, .home-map-link:focus-visible { outline: 2px solid #f6d8d8; outline-offset: 5px; }
+/* Include success states, validation copy, placeholders, and native option text. */
+.apply-page, .apply-page * { color: #fff !important; -webkit-text-fill-color: #fff; }
+.apply-page input::placeholder, .apply-page textarea::placeholder { color: #fff !important; opacity: 1; -webkit-text-fill-color: #fff; }
+.apply-page option { background: #0c0c14; color: #fff; }
+@media (max-width: 640px) {
+  .theatre-hero { padding-top: 125px; }
+  .theatre-hero h1 { font-size: clamp(36px, 10vw, 64px); }
+  .theatre-countdown.countdown-container { padding: 13px 8px; gap: 5px; }
+  .theatre-countdown .digit-group { gap: 2px; }
+  .theatre-countdown .digit-box { width: clamp(23px, 6.8vw, 40px); height: 42px; font-size: 25px; }
+  .theatre-countdown .countdown-separator { font-size: 20px; }
+  .theatre-countdown .countdown-label { font-size: 8px; letter-spacing: .06em; }
+  .theatre-actions { gap: 10px; }
+  .theatre-actions button { font-size: 10px; padding: 13px 17px; }
+  .conference-letter-grid, .home-highlights { grid-template-columns: 1fr; }
+  .conference-letters, .home-location { padding: 65px 0; }
+  .home-map-caption { align-items: flex-start; flex-direction: column; padding: 22px; }
+  .home-map-art { height: 180px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theatre-curtain-left, .theatre-curtain-right { display: none; }
+  .theatre-home .countdown-separator { animation: none; }
+  .letters-reveal { opacity: 1; transform: none; }
+}
+
+/* Song requests share the theatre's burgundy palette. */
+.nav-song-button { display: inline-flex; align-items: center; gap: 8px; color: #f6d8d8; border: 1px solid #c8686855; background: #4a0e1444; padding: 10px 13px; border-radius: 7px; font-size: 11px; white-space: nowrap; cursor: pointer; transition: background .2s; }
+.nav-song-button:hover { background: #75182266; }
+.song-menu-button { display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; }
+.song-dialog { position: fixed; inset: 0; margin: auto; padding: 0; width: min(460px, calc(100% - 32px)); max-height: calc(100dvh - 40px); overflow-y: auto; color: #fff; border: 1px solid #c8686855; border-radius: 16px; background: #160c12; box-shadow: 0 30px 100px #000b; }
+.song-dialog::backdrop { background: #060408cc; backdrop-filter: blur(9px); }
+.song-dialog[open] { animation: song-appear .25s ease-out; }
+.song-card { position: relative; padding: clamp(25px, 5vw, 38px); background: radial-gradient(ellipse at 50% 0, #75182233, transparent 65%); }
+.song-close { position: absolute; right: 14px; top: 14px; padding: 8px; border-radius: 50%; color: #d9bac2; cursor: pointer; }
+.song-close:hover { background: #ffffff0d; }
+.song-icon { display: grid; place-items: center; width: 58px; height: 58px; background: #4a0e1477; border: 1px solid #c8686844; border-radius: 16px; margin-bottom: 22px; color: #e5aaa7; }
+.song-eyebrow { font-size: 8px; letter-spacing: .19em; color: #d69b99; margin-bottom: 12px; }
+.song-card h2 { font-family: var(--font-serif); font-size: clamp(23px, 5vw, 29px); line-height: 1.3; margin-bottom: 15px; }
+.song-description, .song-success p { color: #cebbc4; font-size: 13px; line-height: 1.8; margin-bottom: 24px; }
+.song-card label { display: block; font-size: 12px; font-weight: 600; margin: 18px 0 9px; }
+.song-optional { color: #bca1ad; font-weight: 400; }
+.song-card input { display: block; width: 100%; font-family: inherit; font-size: 14px; color: #fff; background: #08060b99; border: 1px solid #ffffff26; border-radius: 8px; padding: 13px 14px; outline: none; }
+.song-card input::placeholder { color: #a88c99; }
+.song-card input:focus { border-color: #e08c8c; box-shadow: 0 0 0 3px #c8686818; }
+.song-error { font-size: 12px; color: #ffb8b8; line-height: 1.6; margin-top: 12px; }
+.song-submit { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 22px; cursor: pointer; font-size: 12px; }
+.song-card button:disabled, .song-card input:disabled { opacity: .6; cursor: wait; }
+.song-note { text-align: center; color: #bca1ad; font-size: 10px; line-height: 1.6; margin-top: 15px; }
+.song-success { margin-top: 28px; }
+.song-success > svg { color: #e5aaa7; margin-bottom: 18px; }
+.song-success h3 { font-size: 18px; margin-bottom: 12px; }
+.song-loading { animation: song-spin 1s linear infinite; }
+.nav-song-button:focus-visible, .song-card button:focus-visible { outline: 2px solid #f6d8d8; outline-offset: 3px; }
+@keyframes song-spin { to { transform: rotate(360deg); } }
+@keyframes song-appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .song-dialog[open], .song-loading { animation: none; } }

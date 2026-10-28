@@ -51,7 +51,7 @@ export const About: React.FC = () => {
           </div>
           <div className="lg:col-span-5" data-animate="about-desc">
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans">
-              In classical diplomacy, the torch symbolizes illumination amidst ambiguity and the sovereign heat of passionate advocacy. MSEMUN XXVI convenes 550+ delegates to confront modern flashpoints through unyielding debate and treaty craftsmanship.
+              In classical diplomacy, the torch symbolizes illumination amidst ambiguity and the sovereign heat of passionate advocacy. FBALMUN XXVI convenes delegates to confront modern flashpoints through unyielding debate and treaty craftsmanship.
             </p>
           </div>
         </div>
@@ -82,7 +82,7 @@ export const About: React.FC = () => {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-500">
-                  <span>MSEMUN 2026</span>
+                  <span>FBALMUN 2026</span>
                   <span className="text-amber-500/80">CORE CHARTER</span>
                 </div>
               </div>

@@ -56,7 +56,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
               Dossier Submitted to Secretariat
             </h3>
             <p className="text-sm text-slate-300 max-w-md mb-8 font-sans">
-              Thank you, <span className="text-amber-400 font-semibold">{formData.fullName}</span>. Your preliminary delegate application for FBMUN 2026 has been recorded. Our credentials team will review your chamber assignment.
+              Thank you, <span className="text-amber-400 font-semibold">{formData.fullName}</span>. Your preliminary delegate application for FBALMUN 2026 has been recorded. Our credentials team will review your chamber assignment.
             </p>
             <button onClick={handleReset} className="btn-primary text-xs py-3 px-8">
               RETURN TO SUMMIT
@@ -71,7 +71,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                   Delegate Accreditation Application
                 </h3>
                 <p className="text-xs text-slate-400 font-mono">
-                  FBMUN 2026 • İZMİR
+                  FBALMUN 2026 • İZMİR
                 </p>
               </div>
             </div>

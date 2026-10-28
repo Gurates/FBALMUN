@@ -35,7 +35,7 @@ export const getSenderEmail = (): string => {
 };
 
 export const getSenderName = (): string => {
-  return import.meta.env.VITE_SENDER_NAME || 'MSEMUN Secretariat';
+  return import.meta.env.VITE_SENDER_NAME || 'FBALMUN Secretariat';
 };
 
 /**
@@ -49,7 +49,7 @@ export const generateApprovalTemplate = (params: EmailParams, isChairboard: bool
 
   return `Dear ${applicantName},
 
-We are very pleased with your interest in being part of the MSEMUN'26. Following a long review process by our Secretariat, we are thrilled to inform you that your ${effectiveRole} application has been approved. 
+We are very pleased with your interest in being part of the FBALMUN'26. Following a long review process by our Secretariat, we are thrilled to inform you that your ${effectiveRole} application has been approved.
 
 To complete your registration, we kindly request a payment of ... TL to the bank account provided below until .... This fee is inclusive of the welcome pack, meals, desserts, beverages etc. 
 
@@ -70,7 +70,7 @@ Lâl Çarıkoğlu: +90 532 364 70 06
 Instagram: @msemun2026
 
 Best Regards,
-MSEMUN'26 Public Relations Team`;
+FBALMUN'26 Public Relations Team`;
 };
 
 /**
@@ -82,11 +82,11 @@ export const generateChairboardDelegateOfferTemplate = (params: EmailParams): st
 
   return `Dear ${applicantName},
 
-Thank you for your interest in applying for a Chairboard position at MSEMUN'26.
+Thank you for your interest in applying for a Chairboard position at FBALMUN'26.
 
 We regret to inform you that your Chairboard application has not been accepted following a thorough review process conducted by our Secretariat.
 
-However, we are pleased to offer you the opportunity to participate in MSEMUN'26 as a Delegate. We would be delighted to welcome you to our conference in this capacity.
+However, we are pleased to offer you the opportunity to participate in FBALMUN'26 as a Delegate. We would be delighted to welcome you to our conference in this capacity.
 
 To complete your registration, we kindly request a payment of ... TL to the bank account provided below by .... This fee includes the welcome pack, meals, desserts, beverages, and other conference amenities.
 Account Name:
@@ -106,7 +106,7 @@ Lâl Çarıkoğlu: +90 532 364 70 06
 Instagram: @msemun2026
 
 Best Regards,
-MSEMUN'26 Public Relations Team`;
+FBALMUN'26 Public Relations Team`;
 };
 
 /**
@@ -118,9 +118,9 @@ export const generateRejectionTemplate = (params: EmailParams): string => {
 
   return `Dear ${applicantName},
 
-Thank you for your interest in participating in MSEMUN'26.
+Thank you for your interest in participating in FBALMUN'26.
 
-We regret to inform you that your application for MSEMUN'26 has not been accepted following a thorough rewiev process conducted by our Secretariat.
+We regret to inform you that your application for FBALMUN'26 has not been accepted following a thorough rewiev process conducted by our Secretariat.
 
 Should you have any questions or require further assistance, please do not hesitate to contact us.
 
@@ -130,7 +130,7 @@ Lâl Çarıkoğlu: +90 532 364 70 06
 Instagram: @msemun2026
 
 Best Regards,
-MSEMUN'26 Public Relations Team`;
+FBALMUN'26 Public Relations Team`;
 };
 
 /**
@@ -142,11 +142,11 @@ export const generateWaitlistTemplate = (params: EmailParams): string => {
 
   return `Dear ${applicantName},
 
-Thank you for your interest in participating in MSEMUN'26.
+Thank you for your interest in participating in FBALMUN'26.
 
 Following a thorough review process conducted by our Secretariat, we would like to inform you that your application has been placed on the waiting list.
 
-Please note that if a ${role} position becomes available, we will contact you regarding the possibility of participating in MSEMUN'26.
+Please note that if a ${role} position becomes available, we will contact you regarding the possibility of participating in FBALMUN'26.
 
 Should you have any questions or require further assistance, please do not hesitate to contact us.
 
@@ -156,7 +156,7 @@ Should you have any questions or require further assistance, please do not hesit
 Instagram: @msemun2026
 
 Best Regards, 
-MSEMUN'26 Public Relations Team`;
+FBALMUN'26 Public Relations Team`;
 };
 
 /**
@@ -170,13 +170,13 @@ export const getSubjectForDecision = (
 ): string => {
   const safeName = name ? name.trim() : 'Applicant';
   if (decision === 'rejection') {
-    return `MSEMUN'26 — Application Status (${safeName})`;
+    return `FBALMUN'26 — Application Status (${safeName})`;
   }
   if (decision === 'waitlist') {
-    return `MSEMUN'26 — Waiting List Status (${safeName})`;
+    return `FBALMUN'26 — Waiting List Status (${safeName})`;
   }
   const effectiveRole = isChairboard ? 'Chairboard' : role;
-  return `MSEMUN'26 — ${effectiveRole} Application Approved! (${safeName})`;
+  return `FBALMUN'26 — ${effectiveRole} Application Approved! (${safeName})`;
 };
 
 // Geriye dönük uyumluluk takma adları
@@ -238,14 +238,14 @@ export const generateHtmlTemplate = (
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MSEMUN'26 — ${title}</title>
+  <title>FBALMUN'26 — ${title}</title>
 </head>
 <body style="margin: 0; padding: 24px 12px; background-color: #060608; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #f8fafc;">
   <div style="max-width: 620px; margin: 0 auto; background-color: #0c0c14; border: 1px solid ${borderColor}; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.8);">
     
     <div style="background: linear-gradient(135deg, #131320 0%, #1f1b2e 100%); padding: 32px 28px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
       <div style="display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; ${badgeColor}">
-        Secretariat Notice • MSEMUN '26
+        Secretariat Notice • FBALMUN '26
       </div>
       <h1 style="margin: 0 0 8px 0; font-size: 26px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em;">
         ${title}
@@ -262,8 +262,8 @@ export const generateHtmlTemplate = (
     </div>
 
     <div style="background-color: #08080d; padding: 20px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; color: #64748b;">
-      <p style="margin: 0 0 6px 0;">MSEMUN Model United Nations Conference • İzmir, Turkey</p>
-      <p style="margin: 0;">Bu bilgilendirme e-postası resmi MSEMUN Genel Sekreterliği tarafından iletilmiştir.</p>
+      <p style="margin: 0 0 6px 0;">FBALMUN Model United Nations Conference • İzmir, Turkey</p>
+      <p style="margin: 0;">Bu bilgilendirme e-postası resmi FBALMUN Genel Sekreterliği tarafından iletilmiştir.</p>
     </div>
 
   </div>

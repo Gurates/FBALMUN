@@ -72,7 +72,7 @@ export const EmailModal: React.FC<EmailModalProps> = ({
 
     const initialSubject = language === 'tr'
       ? getDefaultSubject(applicantName, applicantRole)
-      : `FBMUN 2026 — Application Approved! (${applicantName})`;
+      : `FBALMUN 2026 — Application Approved! (${applicantName})`;
 
     const initialBody = language === 'tr'
       ? generateTurkishTemplate(params)
@@ -174,7 +174,7 @@ export const EmailModal: React.FC<EmailModalProps> = ({
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">
                   Resmi Onay Bildirimi
                 </span>
-                <span className="text-xs text-slate-400 font-mono">FBMUN '26</span>
+                <span className="text-xs text-slate-400 font-mono">FBALMUN '26</span>
               </div>
               <h2 className="text-lg sm:text-xl font-bold text-white font-serif mt-0.5">
                 Başvuru Onay Maili Gönder

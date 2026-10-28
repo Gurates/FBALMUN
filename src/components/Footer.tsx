@@ -27,7 +27,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-display text-xl font-bold tracking-widest text-white">
-                    FBMUN
+                    FBALMUN
                   </span>
                   <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-semibold tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/25">
                     2026
@@ -71,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
           <div>
-            © {new Date().getFullYear()} MSEMUN Model United Nations Conference. {CONFERENCE_INFO.dates} • İzmir.
+            © {new Date().getFullYear()} FBALMUN Model United Nations Conference. {CONFERENCE_INFO.dates} • İzmir.
           </div>
           <div className="flex items-center gap-2.5 text-slate-400">
             <span>Secretariat:</span>

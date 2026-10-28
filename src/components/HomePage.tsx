@@ -1,357 +1,149 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, Compass, Landmark, Flame, Users, MapPin } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowRight, ArrowDown, Compass, Landmark, Flame, MapPin, ExternalLink } from 'lucide-react';
 import { PageView } from './Navbar';
-import { EmbersCanvas } from './EmbersCanvas';
+import { CONFERENCE_LETTERS } from '../data/conferenceData';
 
-export const DEFAULT_TARGET_DATE = '2026-12-04T09:00:00';
-
-interface HomePageProps {
-  onNavigate: (page: PageView) => void;
-  targetDate?: string;
-}
-
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  isComplete: boolean;
-}
-
-const calculateTimeLeft = (target: string): TimeLeft => {
-  const targetTime = new Date(target).getTime();
-  const now = new Date().getTime();
-  const difference = targetTime - now;
-
-  if (difference <= 0 || isNaN(targetTime)) {
-    return { days: 0, hours: 0, minutes: 0, seconds: 0, isComplete: true };
-  }
-
-  return {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((difference / 1000 / 60) % 60),
-    seconds: Math.floor((difference / 1000) % 60),
-    isComplete: false
-  };
+export const DEFAULT_TARGET_DATE = '2026-12-04T09:00:00+03:00';
+interface HomePageProps { onNavigate: (page: PageView) => void; targetDate?: string; }
+const calculateTimeLeft = (target: string) => {
+  const diff = Math.max(0, new Date(target).getTime() - Date.now()) || 0;
+  return [Math.floor(diff / 86400000), Math.floor(diff / 3600000) % 24, Math.floor(diff / 60000) % 60, Math.floor(diff / 1000) % 60];
 };
-
-export const HomePage: React.FC<HomePageProps> = ({ 
-  onNavigate, 
-  targetDate = DEFAULT_TARGET_DATE 
-}) => {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => calculateTimeLeft(targetDate));
-  const [scrollY, setScrollY] = useState(0);
-
+export const HomePage: React.FC<HomePageProps> = ({ onNavigate, targetDate = DEFAULT_TARGET_DATE }) => {
+  const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft(targetDate));
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const lettersRef = useRef<HTMLElement>(null);
   useEffect(() => {
     setTimeLeft(calculateTimeLeft(targetDate));
-
-    const interval = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(targetDate));
-    }, 1000);
-
-    return () => clearInterval(interval);
+    const interval = window.setInterval(() => setTimeLeft(calculateTimeLeft(targetDate)), 1000);
+    return () => window.clearInterval(interval);
   }, [targetDate]);
-
   useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
+    let frame = 0;
+    let position = 0;
+    let velocity = 0;
+    let target = 0;
+    let lastTime = 0;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const draw = (time: number) => {
+      const dt = Math.min((time - (lastTime || time - 16)) / 1000, 0.032);
+      lastTime = time;
+      // A damped spring gives the fabric weight without tying its movement
+      // directly to individual wheel events. Integrate at small, stable steps.
+      const steps = Math.ceil(dt / 0.008);
+      const step = dt / steps;
+      for (let i = 0; i < steps; i++) {
+        velocity += ((target - position) * 95 - velocity * 19) * step;
+        position += velocity * step;
+      }
+      const p = reducedMotion.matches ? 1 : Math.min(1, Math.max(0, position));
+      const eased = p * p * (3 - 2 * p);
+      const style = curtainRef.current?.style;
+      if (style) {
+        style.setProperty('--curtain-progress', String(eased));
+        style.setProperty('--curtain-sway', `${Math.max(-1.2, Math.min(1.2, velocity * 0.7))}deg`);
+        style.setProperty('--letter-opacity', String(Math.min(1, Math.max(0, (p - 0.2) / 0.8))));
+        // The curved inner edge gathers at the side while the hem hangs freely.
+        const top = 1 - eased * 0.12;
+        const waist = 1 - eased * 0.73;
+        const hem = 1 - eased * 0.54;
+        const path = `M0 0 H${top} C${top} .22, ${waist} .36, ${waist} .62 C${waist} .8, ${hem} .92, ${hem} .98 Q${hem * 0.5} 1.015, 0 .985 Z`;
+        curtainRef.current?.querySelector('#curtain-fabric-shape')?.setAttribute('d', path);
+      }
+      if (Math.abs(target - position) > 0.0001 || Math.abs(velocity) > 0.0001) {
+        frame = window.requestAnimationFrame(draw);
+      } else {
+        frame = 0;
+        lastTime = 0;
       }
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const handleScroll = () => {
+      target = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.85)));
+      if (!frame) frame = window.requestAnimationFrame(draw);
+    };
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    reducedMotion.addEventListener('change', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+      reducedMotion.removeEventListener('change', handleScroll);
+      window.cancelAnimationFrame(frame);
+    };
   }, []);
-
-  const handleScrollToApply = () => {
-    window.scrollTo({ top: 180, behavior: 'smooth' });
-  };
-
-  const bgShiftY = scrollY * 0.42;
-  const bgScale = 1 + Math.min(scrollY * 0.0004, 0.07);
-  const bgBlur = Math.min(scrollY * 0.01, 3.5);
-
-  const embersShiftY = scrollY * 0.75;
-
-  const promptOpacity = Math.max(0, 1 - scrollY / 35);
-  const applyOpacity = Math.min(1, Math.max(0, (scrollY - 20) / 60));
-  const isApplyActive = scrollY > 20;
-
-  const cardsOpacity = Math.min(1, Math.max(0, (scrollY - 35) / 90));
-  const cardsTranslateY = Math.max(0, (1 - cardsOpacity) * 32);
-
-  const renderDigitGroup = (value: number, label: string, isSeconds = false) => {
-    const digits = String(Math.max(0, value)).padStart(2, '0').split('');
-    return (
-      <div className="countdown-block">
-        <div className="digit-group">
-          {digits.map((digit, index) => (
-            <div 
-              key={index} 
-              className="digit-box"
-              style={isSeconds ? { color: '#C86868' } : undefined}
-            >
-              {digit}
-            </div>
+  return (
+    <div ref={curtainRef} className="theatre-home">
+      <div className="theatre-backdrop" aria-hidden="true">
+        <svg className="curtain-definitions" width="0" height="0" focusable="false">
+          <defs>
+            <clipPath id="curtain-fabric-clip" clipPathUnits="objectBoundingBox">
+              <path id="curtain-fabric-shape" d="M0 0 H1 V.98 Q.5 1.015 0 .985 Z" />
+            </clipPath>
+            <clipPath id="curtain-fabric-clip-right" clipPathUnits="objectBoundingBox">
+              <use href="#curtain-fabric-shape" transform="translate(1 0) scale(-1 1)" />
+            </clipPath>
+          </defs>
+        </svg>
+        <div className="theatre-spotlight" />
+        <div className="theatre-curtain theatre-curtain-left" />
+        <div className="theatre-curtain theatre-curtain-right" />
+        <div className="theatre-valance" />
+      </div>
+      <section className="theatre-hero" aria-labelledby="home-title">
+        <p className="theatre-eyebrow">İZMİR · 04 — 06 DECEMBER 2026</p>
+        <h1 id="home-title">FBALMUN<span>2026</span></h1>
+        <p className="theatre-tagline">The Grand Stage of Diplomacy</p>
+        <div className="countdown-container theatre-countdown" aria-label="Countdown to the conference">
+          {timeLeft.map((value, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && <span className="countdown-separator" aria-hidden="true">:</span>}
+              <div className="countdown-block">
+                <div className="digit-group">{String(value).padStart(2, '0').split('').map((digit, i) => <div className="digit-box" key={i}>{digit}</div>)}</div>
+                <span className="countdown-label">{['DAYS', 'HOURS', 'MINUTES', 'SECONDS'][index]}</span>
+              </div>
+            </React.Fragment>
           ))}
         </div>
-        <span 
-          className="countdown-label"
-          style={isSeconds ? { color: '#C86868' } : undefined}
-        >
-          {label}
-        </span>
-      </div>
-    );
-  };
-
-  return (
-    <div 
-      className="relative w-full select-none"
-      style={{
-        minHeight: '185vh',
-        width: '100%',
-        position: 'relative'
-      }}
-    >
-      <div 
-        className="fixed inset-x-0 top-0 pointer-events-none" 
-        style={{ 
-          position: 'fixed', 
-          top: 0, 
-          left: 0, 
-          right: 0, 
-          height: '130vh',
-          zIndex: 0,
-          transform: `translate3d(0, ${-bgShiftY}px, 0) scale(${bgScale})`,
-          filter: `blur(${bgBlur}px)`,
-          willChange: 'transform, filter',
-          transition: 'transform 0.05s linear'
-        }}
-      >
-        <picture 
-          className="w-full h-full block"
-          style={{ width: '100%', height: '100%', display: 'block' }}
-        >
-          <source 
-            media="(min-aspect-ratio: 1/1), (min-width: 768px)" 
-            srcSet="/images/fbmun-logo.jpg" 
-          />
-          <img
-            src="/images/fbmun-logo.jpg"
-            alt="FBMUN 2026 Official Logo"
-            className="w-full h-full object-cover object-center"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              display: 'block'
-            }}
-          />
-        </picture>
-
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(ellipse at center, rgba(6, 6, 8, ${0.08 + Math.min(scrollY * 0.0006, 0.35)}) 0%, rgba(6, 6, 8, ${0.35 + Math.min(scrollY * 0.0008, 0.4)}) 70%, rgba(6, 6, 8, 0.95) 100%)`
-          }}
-        />
-        <div 
-          className="absolute inset-0 pointer-events-none" 
-          style={{
-            background: `linear-gradient(to top, rgba(6,6,8,${0.85 + Math.min(scrollY * 0.0005, 0.15)}), rgba(6,6,8,${0.25 + Math.min(scrollY * 0.0008, 0.3)}) 50%, rgba(6,6,8,0.45) 100%)`
-          }}
-        />
-      </div>
-
-      <div 
-        className="fixed inset-0 pointer-events-none"
-        style={{ 
-          position: 'fixed', 
-          inset: 0, 
-          zIndex: 1,
-          transform: `translate3d(0, ${-embersShiftY}px, 0)`,
-          willChange: 'transform'
-        }}
-      >
-        <EmbersCanvas className="opacity-35" />
-      </div>
-
-      <div 
-        className="relative z-10 w-full flex flex-col items-center px-4"
-        style={{
-          paddingTop: 'clamp(52vh, 58vh, 62vh)',
-          position: 'relative',
-          zIndex: 10
-        }}
-      >
-        <div className="relative flex flex-col items-center justify-center text-center max-w-4xl mx-auto w-full">
-          
-          <div className="countdown-container !mt-0 mb-4 sm:mb-6 backdrop-blur-md p-3 sm:p-5 rounded-2xl bg-black/60 border border-amber-500/30 shadow-[0_12px_45px_rgba(0,0,0,0.85)] transition-shadow duration-300">
-            {renderDigitGroup(timeLeft.days, 'DAYS')}
-            <span className="countdown-separator">:</span>
-            {renderDigitGroup(timeLeft.hours, 'HOURS')}
-            <span className="countdown-separator">:</span>
-            {renderDigitGroup(timeLeft.minutes, 'MINUTES')}
-            <span className="countdown-separator">:</span>
-            {renderDigitGroup(timeLeft.seconds, 'SECONDS', true)}
-          </div>
-
-          <div className="relative flex flex-col items-center justify-center min-h-[60px] sm:min-h-[70px] w-full">
-            
-            <div 
-              onClick={handleScrollToApply}
-              className="absolute flex flex-col items-center gap-1.5 cursor-pointer select-none"
-              style={{
-                opacity: promptOpacity,
-                transform: `translate3d(0, ${scrollY * 0.25}px, 0)`,
-                pointerEvents: promptOpacity > 0.1 ? 'auto' : 'none',
-                transition: 'opacity 0.2s ease-out'
-              }}
-            >
-              <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-amber-300 uppercase animate-pulse">
-                SCROLL DOWN TO APPLY
-              </span>
-              <span className="text-amber-400 text-xs sm:text-sm leading-none animate-bounce">↓</span>
-            </div>
-
-            <div
-              style={{
-                opacity: applyOpacity,
-                transform: `translate3d(0, ${Math.max(0, (1 - applyOpacity) * 22)}px, 0)`,
-                pointerEvents: isApplyActive ? 'auto' : 'none',
-                transition: 'opacity 0.25s ease-out, transform 0.25s ease-out'
-              }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full"
-            >
-              <button
-                type="button"
-                onClick={() => onNavigate('apply')}
-                className="btn-primary group flex items-center justify-center gap-3 text-sm sm:text-base !py-3.5 sm:!py-4 !px-9 sm:!px-12 !rounded-xl shadow-[0_0_40px_rgba(74,14,20,0.75)] hover:shadow-[0_0_60px_rgba(200,104,104,0.65)] hover:scale-105 transition-all duration-300 cursor-pointer"
-                style={{
-                  cursor: 'pointer',
-                  position: 'relative',
-                  zIndex: 20
-                }}
-              >
-                <span className="font-semibold tracking-wider text-white">APPLY NOW</span>
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => onNavigate('committees')}
-                className="btn-secondary group flex items-center justify-center gap-2 text-sm sm:text-base !py-3.5 sm:!py-4 !px-7 sm:!px-9 !rounded-xl hover:scale-105 transition-all duration-300 cursor-pointer"
-                style={{
-                  cursor: 'pointer',
-                  position: 'relative',
-                  zIndex: 20
-                }}
-              >
-                <Compass className="w-5 h-5 text-amber-400 group-hover:rotate-45 transition-transform duration-300" />
-                <span className="font-medium tracking-wider">EXPLORE COMMITTEES</span>
-              </button>
-            </div>
-
-          </div>
-
-          <div 
-            className="w-full max-w-5xl mt-14 sm:mt-20 px-2 select-text"
-            style={{
-              opacity: cardsOpacity,
-              transform: `translate3d(0, ${cardsTranslateY}px, 0)`,
-              pointerEvents: cardsOpacity > 0.3 ? 'auto' : 'none',
-              transition: 'opacity 0.25s ease-out, transform 0.25s ease-out'
-            }}
-          >
-            <div className="flex items-center justify-center gap-3 mb-8">
-              <span className="w-12 h-[1px] bg-amber-500/30" />
-              <span className="font-mono text-xs text-amber-400 tracking-[0.25em] uppercase">XXVI EDITION // İZMİR 2026</span>
-              <span className="w-12 h-[1px] bg-amber-500/30" />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-              <div 
-                onClick={() => onNavigate('committees')}
-                className="p-5 rounded-2xl bg-black/65 border border-amber-500/25 backdrop-blur-md hover:border-amber-500/50 hover:bg-black/80 transition-all duration-300 cursor-pointer group shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
-              >
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-3.5 text-amber-400 group-hover:scale-110 transition-transform">
-                  <Landmark className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif font-bold text-white text-base mb-1.5 flex items-center justify-between">
-                  <span>9 Elite Chambers</span>
-                  <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-amber-400" />
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed font-sans">
-                  General Assembly & Specialized Bodies: UN Women, WHA, IMO & SPECPOL.
-                </p>
-              </div>
-
-              <div 
-                onClick={() => onNavigate('committees')}
-                className="p-5 rounded-2xl bg-black/65 border border-amber-500/25 backdrop-blur-md hover:border-amber-500/50 hover:bg-black/80 transition-all duration-300 cursor-pointer group shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
-              >
-                <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center mb-3.5 text-red-400 group-hover:scale-110 transition-transform">
-                  <Flame className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif font-bold text-white text-base mb-1.5 flex items-center justify-between">
-                  <span>Crisis Simulation</span>
-                  <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-amber-400" />
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed font-sans">
-                  Wars of the Roses JCC, Indo-Pakistani War 1999 FKK, SCOTUS & Bilderberg 2026.
-                </p>
-              </div>
-
-              <div 
-                onClick={() => onNavigate('apply')}
-                className="p-5 rounded-2xl bg-black/65 border border-amber-500/25 backdrop-blur-md hover:border-amber-500/50 hover:bg-black/80 transition-all duration-300 cursor-pointer group shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
-              >
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-3.5 text-amber-400 group-hover:scale-110 transition-transform">
-                  <Users className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif font-bold text-white text-base mb-1.5 flex items-center justify-between">
-                  <span>550+ Delegates</span>
-                  <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-amber-400" />
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed font-sans">
-                  Individual delegates and school delegations uniting across 48+ simulated states.
-                </p>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-black/65 border border-amber-500/25 backdrop-blur-md hover:border-amber-500/50 transition-all duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-3.5 text-amber-400">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif font-bold text-white text-base mb-1.5">
-                  İzmir 2026
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed font-sans">
-                  4 – 6 Aralık 2026. Premier historic Aegean setting uniting future diplomats.
-                </p>
-              </div>
-            </div>
-
-            <div className="text-center pt-16 pb-14 border-t border-amber-500/15 mt-16">
-              <p className="text-[11px] font-mono text-slate-400 uppercase tracking-widest">
-                MSEMUN XXVI // MODEL UNITED NATIONS • ALL RIGHTS RESERVED
-              </p>
-            </div>
-          </div>
-
+        <div className="theatre-actions">
+          <button className="btn-primary" onClick={() => onNavigate('apply')}>APPLY NOW <ArrowRight size={17} /></button>
+          <button className="btn-secondary" onClick={() => onNavigate('committees')}><Compass size={17} /> EXPLORE COMMITTEES</button>
         </div>
-      </div>
-
+        <button className="theatre-scroll" onClick={() => lettersRef.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' })}>
+          <span>SCROLL TO OPEN THE STAGE</span><ArrowDown size={19} />
+        </button>
+      </section>
+      <section ref={lettersRef} className="conference-letters" aria-labelledby="letters-title">
+        <div className="letters-reveal">
+          <p className="theatre-eyebrow">FROM OUR CONFERENCE HOSTS</p>
+          <h2 id="letters-title">Letters of Welcome</h2>
+          <div className="conference-letter-grid">
+            {CONFERENCE_LETTERS.map((letter, index) => (
+              <article className="conference-letter" key={letter.name}>
+                <span className="letter-number">0{index + 1} / WELCOME LETTER</span>
+                <h3>{letter.title}</h3>
+                {letter.paragraphs.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+                <div className="letter-signature">{letter.name}<span>{letter.role}</span></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="home-highlights" aria-label="Conference highlights">
+        <button className="home-highlight" onClick={() => onNavigate('committees')}><Landmark size={24} /><h3>9 Elite Chambers</h3><p>Discover our General Assembly and specialized bodies.</p><ArrowRight size={18} /></button>
+        <button className="home-highlight" onClick={() => onNavigate('committees')}><Flame size={24} /><h3>Crisis Simulation</h3><p>Step into history and shape the course of international debate.</p><ArrowRight size={18} /></button>
+        <div className="home-highlight"><MapPin size={24} /><h3>İzmir 2026</h3><p>Three days of diplomacy, dialogue, and new perspectives. December 4–6, 2026.</p></div>
+      </section>
+      <section className="home-location" aria-labelledby="location-title">
+        <p className="theatre-eyebrow">MEET US IN İZMİR</p>
+        <h2 id="location-title">A meeting point for new perspectives.</h2>
+        <a className="home-map-link" href="https://www.google.com/maps/search/?api=1&query=Konak%2C%20Izmir%2C%20Turkey" target="_blank" rel="noopener noreferrer" aria-label="Open Konak, İzmir in Google Maps (new tab)">
+          <div className="home-map-art" aria-hidden="true"><span className="map-pin-halo"><MapPin size={36} /></span></div>
+          <div className="home-map-caption"><div><span>CONFERENCE LOCATION</span><h3>Konak, İzmir</h3><p>İzmir, Türkiye</p></div><span className="map-open">OPEN IN MAPS <ExternalLink size={18} /></span></div>
+        </a>
+      </section>
+      <footer className="home-footer">© {new Date().getFullYear()} FBALMUN · MODEL UNITED NATIONS · ALL RIGHTS RESERVED</footer>
     </div>
   );
 };
-
 export default HomePage;

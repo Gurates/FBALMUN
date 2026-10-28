@@ -46,7 +46,7 @@ export const FlameLogo: React.FC<FlameLogoProps> = ({
 
       <img
         src="/images/fbmun-logo.png"
-        alt="FBMUN Official Logo"
+        alt="FBALMUN Official Logo"
         width={width}
         height={height}
         className={`relative z-10 w-full h-full object-contain rounded-full transition-transform duration-500 ${

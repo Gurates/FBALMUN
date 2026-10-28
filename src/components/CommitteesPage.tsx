@@ -512,7 +512,7 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({
 
             <div className="w-full flex items-center justify-between pt-2.5 mt-2 border-t border-white/10">
               <span className="text-[10px] sm:text-xs font-mono text-slate-400">
-                Official MSEMUN XXVI Promotional Artwork
+                Official FBALMUN XXVI Promotional Artwork
               </span>
               <button
                 type="button"

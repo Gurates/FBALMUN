@@ -63,7 +63,7 @@ export const ThemePage: React.FC<ThemePageProps> = ({ onNavigate }) => {
               Throughout history, the torch has symbolized illumination piercing through the dark of crisis, while fire represents the crucible where disparate interests clash, refine, and coalesce into enduring treaty consensus.
             </p>
             <p className="text-sm sm:text-base text-slate-400 leading-relaxed font-sans">
-              MSEMUN 2026 brings this sovereign symbolism to the forefront of international debate. Delegates are challenged not merely to deliver speeches, but to command crisis chambers, de-escalate flashpoints, and forge the historic flame of global diplomacy.
+              FBALMUN 2026 brings this sovereign symbolism to the forefront of international debate. Delegates are challenged not merely to deliver speeches, but to command crisis chambers, de-escalate flashpoints, and forge the historic flame of global diplomacy.
             </p>
           </div>
 
@@ -75,7 +75,7 @@ export const ThemePage: React.FC<ThemePageProps> = ({ onNavigate }) => {
                   "In the crucible of debate, the sovereign flame of peace is forged."
                 </p>
                 <span className="text-[11px] font-mono text-slate-500 mt-2 block">
-                  MSEMUN XXVI DIPLOMATIC CHARTER
+                  FBALMUN XXVI DIPLOMATIC CHARTER
                 </span>
               </div>
             </div>
@@ -111,7 +111,7 @@ export const ThemePage: React.FC<ThemePageProps> = ({ onNavigate }) => {
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-white/5 text-[10px] font-mono text-slate-500">
-                    MSEMUN ACCREDITATION
+                    FBALMUN ACCREDITATION
                   </div>
                 </div>
               );

@@ -1,17 +1,16 @@
 import { Speaker, Committee, DaySchedule, StatItem } from '../types';
 
 export const CONFERENCE_INFO = {
-  name: 'FBMUN',
+  name: 'FBALMUN',
   edition: 'XXVI EDITION',
   year: '2026',
   tagline: 'IGNITING GLOBAL DIPLOMACY',
-  subheading: 'Where diplomatic intellect meets the crucible of international crisis. 500+ delegates unite to forge tomorrow’s sovereign resolutions.',
+  subheading: 'Where diplomatic intellect meets the crucible of international crisis. Delegates unite to forge tomorrow’s sovereign resolutions.',
   dates: 'DECEMBER 04 – 06, 2026',
   location: 'THE IMPERIAL CONGRESS PALACE, İZMİR',
   coordinates: '38.4237° N, 27.1428° E',
   registrationDeadline: '2026-11-27T23:59:59',
   stats: [
-    { label: 'GLOBAL DELEGATES', value: '550+', description: 'Representing prestigious institutions worldwide', iconName: 'Users' },
     { label: 'SPECIALIZED CHAMBERS', value: '12', description: 'From General Assembly to high-intensity Crisis', iconName: 'Shield' },
     { label: 'SOVEREIGN NATIONS', value: '48', description: 'Nations actively simulated and represented', iconName: 'Globe' },
     { label: 'DAYS OF RESOLUTION', value: '03', description: 'Continuous debate, caucuses, and directive drafting', iconName: 'Flame' }
@@ -280,3 +279,29 @@ export const VENUE_INFO = {
     { title: 'Direct Transit & 5-Star Accommodations', desc: 'Within walking distance to historic landmarks, premium hotels, and metro links.' }
   ]
 };
+
+// Temporary welcome copy; replace these paragraphs with the hosts' final letters.
+export const CONFERENCE_LETTERS = [
+  {
+    name: 'Buse',
+    role: 'Conference Host · FBALMUN 2026',
+    title: 'A stage for every voice.',
+    paragraphs: [
+      'Dear Delegates, Advisors, and Distinguished Guests,',
+      'It is a pleasure to welcome you to FBALMUN 2026. Our conference begins with a simple belief: every voice can bring a new perspective, and every conversation can become the start of meaningful change.',
+      'As the curtains open in İzmir, we invite you to challenge your assumptions, listen with curiosity, and approach each debate with courage and respect. The ideas you share and the friendships you build will make this experience your own.',
+      'We look forward to welcoming you to our stage and writing this chapter together.'
+    ]
+  },
+  {
+    name: 'Damla',
+    role: 'Conference Host · FBALMUN 2026',
+    title: 'Together, beyond the debate.',
+    paragraphs: [
+      'Dear Members of the FBALMUN Community,',
+      'Welcome to a gathering built on collaboration, imagination, and the willingness to understand one another. FBALMUN 2026 is an invitation to explore difficult questions and discover what we can achieve together.',
+      'Whether this is your first committee or your next diplomatic adventure, we hope you find the confidence to speak, the patience to listen, and the inspiration to keep learning. Every resolution begins with people choosing to work side by side.',
+      'We are excited to meet you in İzmir and share three memorable days of debate, discovery, and friendship.'
+    ]
+  }
+];
