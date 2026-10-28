@@ -4,7 +4,6 @@ import { HomePage } from './components/HomePage';
 import { CommitteesPage } from './components/CommitteesPage';
 import { ApplyPage } from './components/ApplyPage';
 import { AdminDashboard } from './components/AdminDashboard';
-import { VideoIntro } from './components/VideoIntro';
 
 export const App: React.FC = () => {
   const getInitialPage = (): PageView => {
@@ -24,15 +23,6 @@ export const App: React.FC = () => {
 
   const initialPage = getInitialPage();
 
-  const [showIntro, setShowIntro] = useState<boolean>(() => {
-    if (initialPage === 'admin') return false;
-    try {
-      return sessionStorage.getItem('fbmun_intro_played') !== 'true';
-    } catch {
-      return true;
-    }
-  });
-
   const [currentPage, setCurrentPage] = useState<PageView>(initialPage);
   const [selectedCommitteeForApply, setSelectedCommitteeForApply] = useState<string>('unwomen');
 
@@ -50,18 +40,6 @@ export const App: React.FC = () => {
     };
   }, []);
 
-  const handleIntroComplete = () => {
-    try {
-      sessionStorage.setItem('fbmun_intro_played', 'true');
-    } catch (e) {
-      console.warn('sessionStorage error:', e);
-    }
-    setShowIntro(false);
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 150);
-  };
-
   const handleNavigate = (page: PageView) => {
     setCurrentPage(page);
     const targetUrl = page === 'home' ? '/' : `/${page}`;
@@ -75,22 +53,9 @@ export const App: React.FC = () => {
     setSelectedCommitteeForApply(committeeId);
   };
 
-  const isIntroActive = showIntro && currentPage !== 'admin';
-
   return (
     <div className="min-h-screen bg-[#060608] text-[#f8fafc] flex flex-col">
-      {isIntroActive && (
-        <VideoIntro onComplete={handleIntroComplete} />
-      )}
-
-      <div 
-        className={`flex flex-col flex-grow transition-opacity duration-1000 ${
-          isIntroActive ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
-        }`}
-        style={{
-          transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1)'
-        }}
-      >
+      <div className="flex flex-col flex-grow">
         {currentPage !== 'admin' && (
           <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
         )}
