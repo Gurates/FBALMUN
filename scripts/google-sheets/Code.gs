@@ -1,4 +1,17 @@
+// Generated with node scripts/build-sheets-script.mjs
 const APPLICATION_FIELDS = {
+  "song": {
+    "song_title": {
+      "label": "Song name",
+      "max": 120,
+      "required": true
+    },
+    "artist": {
+      "label": "Artist",
+      "max": 120,
+      "required": false
+    }
+  },
   "delegate": {
     "full_name": {
       "label": "Full name",
@@ -299,14 +312,14 @@ const APPLICATION_FIELDS = {
 // FBALMUN application receiver. Run setupSheets once, then deploy as a Web App.
 // Script Properties: SPREADSHEET_ID and APPLICATIONS_WEBHOOK_SECRET.
 // Execute as: Me. Access: Anyone. The shared secret authenticates the server.
-const TAB_NAMES = { delegate: 'Delegates', delegation: 'Delegations', chairboard: 'Chairboard', admin: 'Admin Staff', press: 'Press' };
+const TAB_NAMES = { delegate: 'Delegates', delegation: 'Delegations', chairboard: 'Chairboard', admin: 'Admin Staff', press: 'Press', song: 'Song Requests' };
 
 function jsonResponse(value) {
   return ContentService.createTextOutput(JSON.stringify(value)).setMimeType(ContentService.MimeType.JSON);
 }
 
 function doGet() {
-  return jsonResponse({success: false, error: 'Method not allowed.'});
+  return jsonResponse({success: false, error: 'Method not allowed.', receiverVersion: 'fbalmun-sheets-song-v2'});
 }
 
 function secretsMatch(left, right) {
@@ -335,7 +348,14 @@ function ensureSheet(book, type) {
   if (sheet.getLastRow() === 0) {
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight('bold').setBackground('#4a0e14').setFontColor('#ffffff');
     sheet.setFrozenRows(1);
-    sheet.hideColumns(2);
+    sheet.hideColumns(1, 2);
+    sheet.setColumnWidths(3, headers.length - 2, 190);
+    sheet.getRange(1, 3, sheet.getMaxRows(), headers.length - 2).setWrap(true).setVerticalAlignment('top').setFontSize(11);
+    Object.keys(APPLICATION_FIELDS[type]).forEach((key, index) => {
+      if (APPLICATION_FIELDS[type][key].max >= 1000) sheet.setColumnWidth(index + 5, 420);
+    });
+    sheet.setRowHeight(1, 32);
+    sheet.getRange(1, 3, sheet.getMaxRows(), headers.length - 2).createFilter();
   } else {
     const current = sheet.getRange(1,1,1,headers.length).getDisplayValues()[0];
     if (JSON.stringify(current) !== JSON.stringify(headers)) throw new Error('Unexpected spreadsheet columns');
@@ -356,9 +376,11 @@ function doPost(event) {
     const raw = event && event.postData && event.postData.contents;
     if (!raw || raw.length > 65536) return jsonResponse({success:false,error:'Invalid request.'});
     const input = JSON.parse(raw);
+    if (!input || typeof input !== 'object' || Array.isArray(input)) return jsonResponse({success:false,error:'Invalid request.'});
     const properties = PropertiesService.getScriptProperties();
     const secret = properties.getProperty('APPLICATIONS_WEBHOOK_SECRET') || '';
     if (secret.length < 32 || typeof input.secret !== 'string' || input.secret.length > 512 || !secretsMatch(secret,input.secret)) return jsonResponse({success:false,error:'Unauthorized.'});
+    if (Object.keys(input).some(key => !['type','data','requestId','secret'].includes(key))) return jsonResponse({success:false,error:'Invalid request.'});
     if (!Object.prototype.hasOwnProperty.call(APPLICATION_FIELDS,input.type) || typeof input.requestId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(input.requestId)) return jsonResponse({success:false,error:'Invalid request.'});
     if (!input.data || typeof input.data !== 'object' || Array.isArray(input.data)) return jsonResponse({success:false,error:'Invalid data.'});
     const fields = APPLICATION_FIELDS[input.type];
@@ -369,7 +391,7 @@ function doPost(event) {
         if (typeof value !== 'number' || !Number.isInteger(value) || value < 1 || value > 500) throw new Error('Invalid members');
         return value;
       }
-      if (typeof value !== 'string' || value.length > fields[key].max || (fields[key].required && !value.trim())) throw new Error('Invalid value');
+      if (typeof value !== 'string' || value.length > fields[key].max || value.indexOf('\u0000') !== -1 || (fields[key].required && !value.trim())) throw new Error('Invalid value');
       return value;
     });
     const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,JSON.stringify(values),Utilities.Charset.UTF_8).map(byte => (byte & 255).toString(16).padStart(2,'0')).join('');
@@ -394,18 +416,4 @@ function doPost(event) {
   } finally {
     if (lock && lock.hasLock()) lock.releaseLock();
   }
-}
-
-APPLICATION_FIELDS.song = {
-  song_title: {label: 'Song name', max: 120, required: true},
-  artist: {label: 'Artist', max: 120, required: false}
-};
-TAB_NAMES.song = 'Song Requests';
-
-function doGet() {
-  return jsonResponse({
-    success: false,
-    error: 'Method not allowed.',
-    receiverVersion: 'fbalmun-sheets-song-v2'
-  });
 }
