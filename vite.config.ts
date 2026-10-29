@@ -1,171 +1,55 @@
 import { defineConfig, loadEnv, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import nodemailer from 'nodemailer';
+import { handleApplicationRequest } from './server/application-api';
 
-function emailApiPlugin(env: Record<string, string>): Plugin {
+function applicationApiPlugin(env: Record<string, string>): Plugin {
   return {
-    name: 'email-api-plugin',
+    name: 'application-api',
     configureServer(server) {
-      server.middlewares.use('/api/send-email', async (req, res) => {
-        if (req.method !== 'POST') {
-          res.statusCode = 405;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ error: 'Method Not Allowed' }));
+      server.middlewares.use((req, res, next) => {
+        let pathname: string;
+        try { pathname = decodeURIComponent(new URL(req.url || '/', 'http://localhost').pathname).toLowerCase(); }
+        catch { res.writeHead(400); res.end(); return; }
+        if (/(^|\/)\.env[^/]*(\/|$)|(^|\/)\.git(\/|$)|^\/(server|scripts|netlify)(\/|$)|\.(pem|key|crt|sql)$/.test(pathname) || pathname === '/__open-in-editor') {
+          res.writeHead(403, { 'Content-Type': 'text/plain', 'Cache-Control': 'no-store' });
+          res.end('Forbidden');
           return;
         }
-        const origin = (req.headers['origin'] || req.headers['referer'] || '') as string;
-        const host = (req.headers['host'] || '') as string;
-        const isLocalhost = host.includes('localhost') || host.includes('127.0.0.1');
-        const isOriginLocal = origin.includes('localhost') || origin.includes('127.0.0.1');
-        if (origin && host && !origin.includes(host) && !(isLocalhost && isOriginLocal)) {
-          res.statusCode = 403;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ error: 'Forbidden: Cross-origin relay disallowed' }));
+        next();
+      });
+      server.middlewares.use('/api', async (req, res) => {
+        if (new URL(req.url || '/', 'http://localhost').pathname !== '/applications') {
+          res.writeHead(404, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+          res.end(JSON.stringify({ error: 'Not found.' }));
           return;
         }
-
         let body = '';
-        req.on('data', (chunk) => {
+        let size = 0;
+        let oversized = false;
+        for await (const chunk of req) {
+          size += Buffer.byteLength(chunk);
+          if (size > 65536) { oversized = true; break; }
           body += chunk;
-        });
-
-        req.on('end', async () => {
-          try {
-            // Dynamically load fresh .env so modifications take effect immediately without restarting server
-            const freshEnv = { ...env, ...loadEnv('', process.cwd(), '') };
-
-            const data = JSON.parse(body || '{}');
-            const { to, subject, text, html } = data;
-
-            if (!to || !subject || (!text && !html)) {
-              res.statusCode = 400;
-              res.setHeader('Content-Type', 'application/json');
-              res.end(JSON.stringify({ success: false, error: 'to, subject, and text/html are required' }));
-              return;
-            }
-
-            const senderEmail = freshEnv.VITE_SENDER_EMAIL || freshEnv.SMTP_USER || 'msemun26@gmail.com';
-            const senderName = freshEnv.VITE_SENDER_NAME || 'MSEMUN Secretariat';
-            const resendApiKey = freshEnv.RESEND_API_KEY || freshEnv.VITE_RESEND_API_KEY;
-
-            const smtpUser =
-              freshEnv.SMTP_USER ||
-              freshEnv.VITE_SMTP_USER ||
-              freshEnv.VITE_SENDER_EMAIL ||
-              freshEnv.GMAIL_USER ||
-              freshEnv.EMAIL_USER ||
-              'msemun26@gmail.com';
-
-            const rawPass =
-              freshEnv.SMTP_PASS ||
-              freshEnv.SMTP_PASSWORD ||
-              freshEnv.VITE_SMTP_PASS ||
-              freshEnv.VITE_SMTP_PASSWORD ||
-              freshEnv.GMAIL_PASS ||
-              freshEnv.GMAIL_APP_PASS ||
-              freshEnv.GMAIL_PASSWORD ||
-              freshEnv.EMAIL_PASS ||
-              freshEnv.EMAIL_PASSWORD ||
-              '';
-
-            const smtpPass = rawPass ? rawPass.trim().replace(/\s+/g, '') : '';
-
-            if (resendApiKey) {
-              const resendRes = await fetch('https://api.resend.com/emails', {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${resendApiKey}`,
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  from: `${senderName} <${senderEmail}>`,
-                  to: Array.isArray(to) ? to : [to],
-                  subject: subject,
-                  text: text,
-                  html: html || (text ? text.replace(/\n/g, '<br/>') : '')
-                })
-              });
-
-              const resendData = await resendRes.json();
-              if (resendRes.ok) {
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ success: true, provider: 'resend', data: resendData }));
-                return;
-              } else {
-                res.statusCode = 400;
-                res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ success: false, provider: 'resend', error: (resendData as any)?.message || 'Resend error' }));
-                return;
-              }
-            }
-
-            if (smtpUser && smtpPass) {
-              const cleanPass = smtpPass.replace(/\s+/g, '');
-              const isGmail = (freshEnv.SMTP_HOST || '').includes('gmail') || smtpUser.includes('gmail.com');
-
-              const transporter = nodemailer.createTransport(
-                isGmail
-                  ? {
-                      service: 'gmail',
-                      auth: {
-                        user: smtpUser,
-                        pass: cleanPass
-                      }
-                    }
-                  : {
-                      host: freshEnv.SMTP_HOST || 'smtp.gmail.com',
-                      port: Number(freshEnv.SMTP_PORT) || 465,
-                      secure: Number(freshEnv.SMTP_PORT) === 465 || !freshEnv.SMTP_PORT,
-                      auth: {
-                        user: smtpUser,
-                        pass: cleanPass
-                      }
-                    }
-              );
-
-              const info = await transporter.sendMail({
-                from: `"${senderName}" <${smtpUser}>`,
-                replyTo: senderEmail,
-                to: to,
-                subject: subject,
-                text: text,
-                html: html || (text ? text.replace(/\n/g, '<br/>') : '')
-              });
-
-              res.statusCode = 200;
-              res.setHeader('Content-Type', 'application/json');
-              res.end(JSON.stringify({ success: true, provider: 'smtp', messageId: info.messageId }));
-              return;
-            }
-
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify({
-              success: false,
-              notConfigured: true,
-              message: 'SMTP veya Resend API anahtarı .env dosyasında yapılandırılmamış.'
-            }));
-          } catch (err: any) {
-            console.error('Error handling /api/send-email:', err);
-            res.statusCode = 500;
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify({ success: false, error: err.message || 'Internal server error' }));
-          }
-        });
+        }
+        if (oversized) {
+          res.writeHead(413, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Application is too large.' }));
+          return;
+        }
+        const headers = Object.fromEntries(Object.entries(req.headers).map(([key, value]) => [key, Array.isArray(value) ? value.join(',') : value]));
+        const result = await handleApplicationRequest(req.method, headers, body, { ...env, ...loadEnv('', process.cwd(), '') });
+        res.writeHead(result.statusCode, result.headers);
+        res.end(result.body);
       });
     }
   };
 }
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
-
-  return {
-    plugins: [react(), emailApiPlugin(env)],
-    server: {
-      port: 5173,
-      host: true
-    }
-  };
-});
+export default defineConfig(({ mode }) => ({
+  plugins: [react(), applicationApiPlugin(loadEnv(mode, process.cwd(), ''))],
+  server: {
+    port: 5173, host: true,
+    cors: false,
+    fs: { deny: ['**/.env*', '**/.git/**', '**/server/**', '**/scripts/**', '**/netlify/**', '**/*.{pem,key,crt,sql}'] }
+  }
+}));

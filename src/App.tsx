@@ -3,15 +3,11 @@ import { Navbar, PageView } from './components/Navbar';
 import { HomePage } from './components/HomePage';
 import { CommitteesPage } from './components/CommitteesPage';
 import { ApplyPage } from './components/ApplyPage';
-import { AdminDashboard } from './components/AdminDashboard';
 
 export const App: React.FC = () => {
   const getInitialPage = (): PageView => {
     const path = window.location.pathname.toLowerCase();
     const hash = window.location.hash.toLowerCase();
-    if (path.includes('/admin') || hash.includes('admin')) {
-      return 'admin';
-    }
     if (path.includes('/committees') || hash.includes('committees')) {
       return 'committees';
     }
@@ -56,9 +52,7 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#060608] text-[#f8fafc] flex flex-col">
       <div className="flex flex-col flex-grow">
-        {currentPage !== 'admin' && (
-          <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
-        )}
+        <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
 
         <main className="flex-grow">
           {currentPage === 'home' && (
@@ -79,9 +73,6 @@ export const App: React.FC = () => {
             />
           )}
 
-          {currentPage === 'admin' && (
-            <AdminDashboard onNavigate={handleNavigate} />
-          )}
         </main>
       </div>
     </div>

@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, LoaderCircle, Music2, Send, X } from 'lucide-react';
-import { isSupabaseConfigured, supabase } from '../lib/supabase';
+import { submitApplication } from '../lib/applications';
 
 interface SongRequestModalProps { onClose: () => void; }
 
 export const SongRequestModal: React.FC<SongRequestModalProps> = ({ onClose }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const requestId = useRef(crypto.randomUUID());
   const sending = useRef(false);
   const [song, setSong] = useState('');
   const [artist, setArtist] = useState('');
@@ -28,20 +27,14 @@ export const SongRequestModal: React.FC<SongRequestModalProps> = ({ onClose }) =
     event.preventDefault();
     if (sending.current) return;
     if (!song.trim()) { setError('Please enter a song name.'); return; }
-    if (!isSupabaseConfigured) {
-      setError('Song requests are not available yet. Please check back soon.');
-      return;
-    }
     sending.current = true;
     setStatus('sending');
     setError('');
     try {
-      const { error: insertError } = await supabase.from('song_requests').insert({
-        id: requestId.current,
+      await submitApplication('song', {
         song_title: song.trim(),
-        artist: artist.trim() || null,
-      }).abortSignal(AbortSignal.timeout(15000));
-      if (insertError && insertError.code !== '23505') throw insertError;
+        artist: artist.trim(),
+      });
       setStatus('success');
     } catch {
       setError('We couldn’t send your song request. Please try again in a moment.');
@@ -72,10 +65,10 @@ export const SongRequestModal: React.FC<SongRequestModalProps> = ({ onClose }) =
             <p className="song-description">What would you like to hear? Add your favorite track to our conference song requests.</p>
             <label htmlFor="song-name">Song name <span aria-hidden="true">*</span></label>
             <input id="song-name" name="song" placeholder="Enter your favorite song" autoFocus required maxLength={120} value={song} disabled={status === 'sending'}
-              onChange={(event) => { setSong(event.target.value); setError(''); requestId.current = crypto.randomUUID(); }} aria-describedby={error ? 'song-error' : undefined} />
+              onChange={(event) => { setSong(event.target.value); setError(''); }} aria-describedby={error ? 'song-error' : undefined} />
             <label htmlFor="song-artist">Artist <span className="song-optional">(optional)</span></label>
             <input id="song-artist" name="artist" placeholder="Who sings it?" maxLength={120} value={artist} disabled={status === 'sending'}
-              onChange={(event) => { setArtist(event.target.value); setError(''); requestId.current = crypto.randomUUID(); }} />
+              onChange={(event) => { setArtist(event.target.value); setError(''); }} />
             <div id="song-error" className="song-error" role="alert">{error}</div>
             <button type="submit" className="btn-primary song-submit" disabled={status === 'sending'}>
               {status === 'sending' ? <><LoaderCircle size={17} className="song-loading" /> SENDING…</> : <>SEND YOUR SONG <Send size={16} /></>}

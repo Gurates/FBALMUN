@@ -78,15 +78,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <a href="mailto:secretariat@msemun.org" className="text-amber-400 hover:underline">
               secretariat@msemun.org
             </a>
-            <span className="text-slate-600">•</span>
-            <button
-              onClick={() => onNavigate('admin')}
-              className="text-slate-500 hover:text-amber-400 transition-colors inline-flex items-center gap-1 cursor-pointer"
-              title="Secretariat Admin Portal (/admin)"
-              style={{ background: 'none', border: 'none', outline: 'none' }}
-            >
-              <span>Portal</span>
-            </button>
           </div>
         </div>
 

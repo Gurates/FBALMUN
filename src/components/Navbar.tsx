@@ -3,7 +3,7 @@ import { FlameLogo } from './FlameLogo';
 import { Menu, Music2, X } from 'lucide-react';
 import { SongRequestModal } from './SongRequestModal';
 
-export type PageView = 'home' | 'committees' | 'apply' | 'admin';
+export type PageView = 'home' | 'committees' | 'apply';
 
 interface NavbarProps {
   currentPage: PageView;
