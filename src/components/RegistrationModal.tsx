@@ -127,7 +127,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                   >
                     {COMMITTEES_DATA.map((c) => (
                       <option key={c.id} value={c.id}>
-                        {c.acronym} — {c.name}
+                        {c.name}
                       </option>
                     ))}
                   </select>

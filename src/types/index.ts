@@ -16,18 +16,19 @@ export interface Committee {
   shortTitle?: string;
   agenda: string;
   description: string;
-  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert' | 'Specialized Crisis';
-  seats: number | string;
-  president: string;
+  level?: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert' | 'Specialized Crisis';
+  seats?: number | string;
+  president?: string;
   usg?: string | string[];
   acas?: string;
   ctm?: string;
   rapporteur?: string;
   hoc?: string;
   subCabinets?: string[];
-  accentColor: string;
-  flameFocus: string;
+  accentColor?: string;
+  flameFocus?: string;
   image?: string;
+  imageAlt?: string;
   gradient?: string;
 }
 

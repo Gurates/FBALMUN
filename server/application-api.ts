@@ -1,3 +1,5 @@
+import { COMMITTEES_DATA } from '../src/data/conferenceData';
+
 type Field = { label: string; max: number; required?: boolean };
 const field = (label: string, max: number, required = false): Field => ({ label, max, required });
 const contact = {
@@ -15,7 +17,7 @@ export const applicationFields: Record<string, Record<string, Field>> = {
   admin: { ...individual, ...experience, ...extra },
   press: { ...individual, ...experience, camera_model: field('Camera model', 150), ...extra },
 };
-const committees = ['unwomen','wha','imo','specpol','bilderberg','swiss-assembly','scotus','wars-of-the-roses','fkk-pakistan-india'];
+const committeeIds = new Set(COMMITTEES_DATA.map(committee => committee.id));
 
 export function validateApplication(input: unknown) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('Invalid application.');
@@ -43,7 +45,7 @@ export function validateApplication(input: unknown) {
   if (type !== 'delegation' && !['Prep','9th Grade','10th Grade','11th Grade','12th Grade'].includes(String(clean.grade))) throw new Error('Invalid grade.');
   if (type === 'delegate' || type === 'chairboard') {
     const prefs = (type === 'delegate' ? ['committee_preference_1','committee_preference_2','committee_preference_3'] : ['pref1','pref2','pref3']).map(key => String(clean[key]));
-    if (prefs.some(value => !committees.includes(value)) || new Set(prefs).size !== 3) throw new Error('Choose three different committees.');
+    if (prefs.some(value => !committeeIds.has(value)) || new Set(prefs).size !== 3) throw new Error('Choose three different committees.');
     if (String(clean.motivation_letter).length < 150) throw new Error('Motivation letter must be at least 150 characters.');
   }
   return { type, data: clean, requestId };

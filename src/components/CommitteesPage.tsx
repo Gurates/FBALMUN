@@ -21,9 +21,12 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({ onNavigate, onSe
       </header>
 
       <div className="committees-list">
-        {COMMITTEES_DATA.map((committee, index) => {
+        {COMMITTEES_DATA.map(committee => {
+          const { usg } = committee;
           const staff = [
-            { label: 'USG', value: Array.isArray(committee.usg) ? committee.usg.join(', ') : committee.usg },
+            Array.isArray(usg)
+              ? { label: 'Co-Under-Secretaries-General', value: usg.join(', ') }
+              : { label: 'Under-Secretary-General', value: usg },
             { label: 'Academic Assistant', value: committee.acas },
             { label: 'Head of Crisis', value: committee.hoc },
             { label: 'Crisis Team Member', value: committee.ctm },
@@ -31,23 +34,20 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({ onNavigate, onSe
           ].filter(member => member.value);
           return (
             <section className="committee-section" id={`committee-${committee.id}`} key={committee.id} aria-labelledby={`title-${committee.id}`}>
-              <div className="committee-section-header">
-                <p className="committees-eyebrow"><span className="committee-number">{String(index + 1).padStart(2, '0')}</span>{committee.acronym}</p>
-                <p className="committee-meta">{committee.level}<span aria-hidden="true">·</span>{committee.seats} seats</p>
-              </div>
-              <div className={`committee-section-body${committee.image ? '' : ' committee-without-poster'}`}>
+              {committee.acronym !== committee.name && <p className="committees-eyebrow committee-section-label">{committee.acronym}</p>}
+              <div className={`committee-section-body${committee.image ? ' committee-with-image' : ''}`}>
                 {committee.image && (
-                  <figure className="committee-poster">
-                    <a href={committee.image} target="_blank" rel="noopener noreferrer" aria-label={`View ${committee.acronym} poster (new tab)`}>
-                      <img src={committee.image} alt={`${committee.acronym} official poster`} loading="lazy" decoding="async" />
-                      <figcaption>View full poster <ArrowUpRight size={14} /></figcaption>
+                  <figure className="committee-image">
+                    <a href={committee.image} target="_blank" rel="noopener noreferrer" aria-label={`View ${committee.acronym} image (new tab)`}>
+                      <img src={committee.image} alt={committee.imageAlt ?? ''} loading="lazy" decoding="async" />
+                      <span className="committee-image-link">View full image <ArrowUpRight size={14} aria-hidden="true" /></span>
                     </a>
                   </figure>
                 )}
                 <div className="committee-copy">
                   <h2 id={`title-${committee.id}`}>{committee.name}</h2>
                   <p className="committee-description">{committee.description}</p>
-                  <div className="committee-agenda"><h3>Agenda</h3><p>{committee.agenda}</p></div>
+                  <div className="committee-agenda"><h3>Agenda Item</h3><p>{committee.agenda}</p></div>
                   {staff.length > 0 && (
                     <dl className="committee-team">
                       {staff.map(member => <div key={member.label}><dt>{member.label}</dt><dd>{member.value}</dd></div>)}

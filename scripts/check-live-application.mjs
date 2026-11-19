@@ -12,9 +12,9 @@ const contact={full_name:'[TEST] FBALMUN Conference Setup',school:'Integration t
 const motivation='This is a synthetic integration test for the conference account setup. It checks the correct sheet and does not contain a real application or any real personal information.';
 const fixtures={
   press:{...contact,camera_model:'Test only'},
-  delegate:{...contact,committee_preference_1:'unwomen',committee_preference_2:'wha',committee_preference_3:'imo',motivation_letter:motivation},
+  delegate:{...contact,committee_preference_1:'unwomen',committee_preference_2:'ohchr',committee_preference_3:'unodc',motivation_letter:motivation},
   delegation:{full_name:contact.full_name,school:contact.school,email:contact.email,phone:contact.phone,delegation_name:'[TEST] Conference setup',expected_members:2,all_emails:'integration-test@example.invalid',all_phones:contact.phone},
-  chairboard:{...contact,pref1:'unwomen',pref2:'wha',pref3:'imo',motivation_letter:motivation,q_ai_suspicion:'Synthetic test answer',q_final_documents:'Synthetic test answer',q_disagreement:'Synthetic test answer'},
+  chairboard:{...contact,pref1:'unwomen',pref2:'ohchr',pref3:'unodc',motivation_letter:motivation,q_ai_suspicion:'Synthetic test answer',q_final_documents:'Synthetic test answer',q_disagreement:'Synthetic test answer'},
   admin:{...contact},
   song:{song_title:'[TEST] Conference Sheets Connection',artist:'FBALMUN integration test'},
 };

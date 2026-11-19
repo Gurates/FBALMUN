@@ -14,9 +14,9 @@ const env = {APPLICATIONS_WEBHOOK_URL:'https://script.google.com/macros/s/test-d
 const contact = {full_name:'Test Applicant',school:'Test school',grade:'10th Grade',email:'test@example.invalid',phone:'05550000000'};
 const fixtures = {
   song:{song_title:'[TEST] Sheets song request',artist:'Test artist'},
-  delegate:{...contact,committee_preference_1:'unwomen',committee_preference_2:'wha',committee_preference_3:'imo',motivation_letter:'Test motivation. '.repeat(12)},
+  delegate:{...contact,committee_preference_1:'unwomen',committee_preference_2:'ohchr',committee_preference_3:'unodc',motivation_letter:'Test motivation. '.repeat(12)},
   delegation:{full_name:contact.full_name,school:contact.school,email:contact.email,phone:contact.phone,delegation_name:'Test group',expected_members:2,all_emails:'member@example.invalid',all_phones:contact.phone},
-  chairboard:{...contact,pref1:'unwomen',pref2:'wha',pref3:'imo',motivation_letter:'Test motivation. '.repeat(12),q_ai_suspicion:'Test answer',q_final_documents:'Test answer',q_disagreement:'Test answer'},
+  chairboard:{...contact,pref1:'unwomen',pref2:'ohchr',pref3:'unodc',motivation_letter:'Test motivation. '.repeat(12),q_ai_suspicion:'Test answer',q_final_documents:'Test answer',q_disagreement:'Test answer'},
   admin:{...contact},press:{...contact,camera_model:'Test camera'},
 };
 

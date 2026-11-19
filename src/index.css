@@ -1042,16 +1042,12 @@ button.home-highlight:hover { background: #29131d; border-color: #c8686866; }
 .committees-index a { color: #dfc4c8; font-size: 11px; letter-spacing: .06em; text-underline-offset: 5px; }
 .committees-index a:hover { color: #fff; text-decoration: underline; }
 .committee-section { border-top: 1px solid #ffffff1c; padding: 34px 0 54px; scroll-margin-top: 100px; }
-.committee-section-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 27px; }
-.committee-section-header .committees-eyebrow { display: flex; align-items: center; gap: 16px; }
-.committee-number { color: #84717b; font-variant-numeric: tabular-nums; }
-.committee-meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 11px; color: #bba7b0; }
-.committee-section-body { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; align-items: start; }
-.committee-without-poster { grid-template-columns: 1fr; }
-.committee-poster { margin: 0; }
-.committee-poster img { width: 100%; height: auto; display: block; }
-.committee-poster figcaption { display: flex; align-items: center; gap: 6px; font-size: 10px; margin-top: 12px; color: #bca1ad; }
-.committee-poster a:hover figcaption { color: #fff; }
+.committee-section-label { margin-bottom: 24px; }
+.committee-with-image { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; align-items: start; }
+.committee-image { margin: 0; }
+.committee-image img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.committee-image-link { display: flex; align-items: center; gap: 6px; font-size: 10px; margin-top: 12px; color: #bca1ad; }
+.committee-image a:hover .committee-image-link { color: #fff; }
 .committee-copy { min-width: 0; }
 .committee-copy h2 { font-family: var(--font-serif); font-size: clamp(21px, 2.7vw, 30px); font-weight: 500; line-height: 1.45; overflow-wrap: anywhere; }
 .committee-description { color: #c4b8bf; font-size: 13px; line-height: 1.9; margin-top: 18px; }
@@ -1073,9 +1069,8 @@ button.home-highlight:hover { background: #29131d; border-color: #c8686866; }
   .committees-intro { padding-bottom: 34px; }
   .committees-index { gap: 12px 20px; margin-top: 25px; }
   .committee-section { padding: 26px 0 40px; }
-  .committee-section-header { align-items: flex-start; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-  .committee-section-body { grid-template-columns: 1fr; gap: 25px; }
-  .committee-poster { width: min(240px, 100%); }
+  .committee-with-image { grid-template-columns: 1fr; gap: 25px; }
+  .committee-image { width: min(280px, 100%); }
   .committee-team { gap: 18px; }
 }
 @media (prefers-reduced-motion: reduce) { .committees-page { scroll-behavior: auto; } }

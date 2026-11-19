@@ -153,7 +153,7 @@ export const ApplyPage: React.FC<ApplyPageProps> = ({
   const getFilteredCommitteeOptions = (selectedPref: string, otherPrefs: string[]) => {
     return COMMITTEES_DATA.map(c => ({
       value: c.id,
-      label: `${c.acronym} — ${c.name}`,
+      label: c.name,
       disabled: otherPrefs.includes(c.id) && c.id !== selectedPref
     }));
   };
