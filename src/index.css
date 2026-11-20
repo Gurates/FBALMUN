@@ -1044,10 +1044,7 @@ button.home-highlight:hover { background: #29131d; border-color: #c8686866; }
 .committee-section { border-top: 1px solid #ffffff1c; padding: 34px 0 54px; scroll-margin-top: 100px; }
 .committee-section-label { margin-bottom: 24px; }
 .committee-with-image { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; align-items: start; }
-.committee-image { margin: 0; }
-.committee-image img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-.committee-image-link { display: flex; align-items: center; gap: 6px; font-size: 10px; margin-top: 12px; color: #bca1ad; }
-.committee-image a:hover .committee-image-link { color: #fff; }
+.committee-image { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .committee-copy { min-width: 0; }
 .committee-copy h2 { font-family: var(--font-serif); font-size: clamp(21px, 2.7vw, 30px); font-weight: 500; line-height: 1.45; overflow-wrap: anywhere; }
 .committee-description { color: #c4b8bf; font-size: 13px; line-height: 1.9; margin-top: 18px; }

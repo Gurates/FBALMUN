@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ArrowUp, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUp } from 'lucide-react';
 import { COMMITTEES_DATA } from '../data/conferenceData';
 import { PageView } from './Navbar';
 
@@ -37,12 +37,7 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({ onNavigate, onSe
               {committee.acronym !== committee.name && <p className="committees-eyebrow committee-section-label">{committee.acronym}</p>}
               <div className={`committee-section-body${committee.image ? ' committee-with-image' : ''}`}>
                 {committee.image && (
-                  <figure className="committee-image">
-                    <a href={committee.image} target="_blank" rel="noopener noreferrer" aria-label={`View ${committee.acronym} image (new tab)`}>
-                      <img src={committee.image} alt={committee.imageAlt ?? ''} loading="lazy" decoding="async" />
-                      <span className="committee-image-link">View full image <ArrowUpRight size={14} aria-hidden="true" /></span>
-                    </a>
-                  </figure>
+                  <img className="committee-image" src={committee.image} alt={committee.imageAlt ?? ''} loading="lazy" decoding="async" />
                 )}
                 <div className="committee-copy">
                   <h2 id={`title-${committee.id}`}>{committee.name}</h2>

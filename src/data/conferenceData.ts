@@ -63,8 +63,8 @@ export const SPEAKERS_DATA: Speaker[] = [
 export const COMMITTEES_DATA: Committee[] = [
   {
     id: 'us-criminal-court',
-    image: '/images/committees/2026/us-criminal-court.webp',
-    imageAlt: 'An authentic American courtroom with a sunlit walnut judge’s bench and counsel tables',
+    image: '/images/fbalfoto/us%20renk.jpg.jpeg',
+    imageAlt: 'A crowded U.S. legislative chamber',
     acronym: 'U.S. Criminal Court',
     name: 'U.S. Criminal Court',
     agenda: 'Open Agenda',
@@ -73,8 +73,8 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'unwomen',
-    image: '/images/committees/2026/unwomen.webp',
-    imageAlt: 'Diplomats and ambassadors in an official United Nations summit session',
+    image: '/images/fbalfoto/unwomen%20renkli.jpg.jpeg',
+    imageAlt: 'Women marching in a crowded demonstration',
     acronym: 'UN Women',
     name: 'United Nations Entity for Gender Equality and the Empowerment of Women (UN Women)',
     agenda: 'Ways to Achieve the Goals of Beijing+30',
@@ -84,8 +84,8 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'ohchr',
-    image: '/images/committees/2026/ohchr.webp',
-    imageAlt: 'Peaceful demonstrators marching for human rights on a Parisian boulevard',
+    image: '/images/fbalfoto/ohchr%20renkli.jpg.jpeg',
+    imageAlt: 'A protest banner about migration draped over a monument in France',
     acronym: 'OHCHR',
     name: 'Office of the United Nations High Commissioner for Human Rights (OHCHR)',
     agenda: 'Addressing Human Rights Risks in the Context of Protests in Europe, with a Focus on France',
@@ -95,8 +95,8 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'unodc',
-    image: '/images/committees/2026/unodc.webp',
-    imageAlt: 'An international shipping container port terminal at dusk with customs inspection',
+    image: '/images/fbalfoto/unodc%20renkli.jpg.jpeg',
+    imageAlt: 'A working dog and officers beside rows of seized packages',
     acronym: 'UNODC',
     name: 'United Nations Office on Drugs and Crime (UNODC)',
     agenda: 'Preventing the Expansion of International Drug Trafficking and Disrupting Transnational Drug Cartel Networks',
@@ -106,8 +106,8 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'san-francisco',
-    image: '/images/committees/2026/san-francisco.webp',
-    imageAlt: 'Archival 1945 photograph of delegates at the historic San Francisco Conference',
+    image: '/images/fbalfoto/san%20fransisco%20renkli.jpg.jpeg',
+    imageAlt: 'Delegates gathered around a signing table in front of national flags',
     acronym: 'San Francisco',
     name: 'San Francisco Conference',
     agenda: 'Open Agenda',
@@ -116,8 +116,8 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'cia',
-    image: '/images/committees/2026/cia.webp',
-    imageAlt: 'An intelligence analyst desk with an emerald banker lamp and classified dossiers',
+    image: '/images/fbalfoto/CIA%20RENKLI.jpg.jpeg',
+    imageAlt: 'A silhouette overlaid with fragments of the CIA seal',
     acronym: 'CIA',
     name: 'Central Intelligence Agency (CIA)',
     agenda: 'To be announced',
@@ -127,8 +127,8 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'g20',
-    image: '/images/committees/2026/g20.webp',
-    imageAlt: 'G20 Leaders Summit plenary circular conference table with member state flags',
+    image: '/images/fbalfoto/g20%20renkli.jpg.jpeg',
+    imageAlt: 'A row of national flags extending down a corridor',
     acronym: 'G20',
     name: 'Group of 20 (G20)',
     agenda: 'Open Agenda',
@@ -138,8 +138,8 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'unsc',
-    image: '/images/committees/2026/unsc.webp',
-    imageAlt: 'United Nations Security Council session at the iconic horseshoe table in New York',
+    image: '/images/fbalfoto/unsc%20renkli.jpg.jpeg',
+    imageAlt: 'People gathered outdoors among rows of small flags',
     acronym: 'UNSC',
     name: 'United Nations Security Council (UNSC)',
     agenda: 'The Russia–Ukraine War',
@@ -148,8 +148,8 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'french-national-convention',
-    image: '/images/committees/2026/french-national-convention.webp',
-    imageAlt: 'Neoclassical historical oil painting of the 1792 French National Convention in Paris',
+    image: '/images/fbalfoto/french%20renk.jpg.jpeg',
+    imageAlt: 'Historical artwork of a crowded French revolutionary assembly',
     acronym: 'French National Convention',
     name: 'French National Convention',
     agenda: 'Open Agenda',
