@@ -63,7 +63,7 @@ export const SPEAKERS_DATA: Speaker[] = [
 export const COMMITTEES_DATA: Committee[] = [
   {
     id: 'us-criminal-court',
-    image: '/images/fbalfoto/us%20renk.jpg.jpeg',
+    image: '/images/fbalfoto/web/us-criminal-court.webp',
     imageAlt: 'A crowded U.S. legislative chamber',
     acronym: 'U.S. Criminal Court',
     name: 'U.S. Criminal Court',
@@ -73,7 +73,7 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'unwomen',
-    image: '/images/fbalfoto/unwomen%20renkli.jpg.jpeg',
+    image: '/images/fbalfoto/web/unwomen.webp',
     imageAlt: 'Women marching in a crowded demonstration',
     acronym: 'UN Women',
     name: 'United Nations Entity for Gender Equality and the Empowerment of Women (UN Women)',
@@ -84,7 +84,7 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'ohchr',
-    image: '/images/fbalfoto/ohchr%20renkli.jpg.jpeg',
+    image: '/images/fbalfoto/web/ohchr.webp',
     imageAlt: 'A protest banner about migration draped over a monument in France',
     acronym: 'OHCHR',
     name: 'Office of the United Nations High Commissioner for Human Rights (OHCHR)',
@@ -95,7 +95,7 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'unodc',
-    image: '/images/fbalfoto/unodc%20renkli.jpg.jpeg',
+    image: '/images/fbalfoto/web/unodc.webp',
     imageAlt: 'A working dog and officers beside rows of seized packages',
     acronym: 'UNODC',
     name: 'United Nations Office on Drugs and Crime (UNODC)',
@@ -106,7 +106,7 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'san-francisco',
-    image: '/images/fbalfoto/san%20fransisco%20renkli.jpg.jpeg',
+    image: '/images/fbalfoto/web/san-francisco.webp',
     imageAlt: 'Delegates gathered around a signing table in front of national flags',
     acronym: 'San Francisco',
     name: 'San Francisco Conference',
@@ -116,7 +116,7 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'cia',
-    image: '/images/fbalfoto/CIA%20RENKLI.jpg.jpeg',
+    image: '/images/fbalfoto/web/cia.webp',
     imageAlt: 'A silhouette overlaid with fragments of the CIA seal',
     acronym: 'CIA',
     name: 'Central Intelligence Agency (CIA)',
@@ -127,7 +127,7 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'g20',
-    image: '/images/fbalfoto/g20%20renkli.jpg.jpeg',
+    image: '/images/fbalfoto/web/g20.webp',
     imageAlt: 'A row of national flags extending down a corridor',
     acronym: 'G20',
     name: 'Group of 20 (G20)',
@@ -138,7 +138,7 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'unsc',
-    image: '/images/fbalfoto/unsc%20renkli.jpg.jpeg',
+    image: '/images/fbalfoto/web/unsc.webp',
     imageAlt: 'People gathered outdoors among rows of small flags',
     acronym: 'UNSC',
     name: 'United Nations Security Council (UNSC)',
@@ -148,7 +148,7 @@ export const COMMITTEES_DATA: Committee[] = [
   },
   {
     id: 'french-national-convention',
-    image: '/images/fbalfoto/french%20renk.jpg.jpeg',
+    image: '/images/fbalfoto/web/french-national-convention.webp',
     imageAlt: 'Historical artwork of a crowded French revolutionary assembly',
     acronym: 'French National Convention',
     name: 'French National Convention',

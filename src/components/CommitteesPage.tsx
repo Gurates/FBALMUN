@@ -21,7 +21,7 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({ onNavigate, onSe
       </header>
 
       <div className="committees-list">
-        {COMMITTEES_DATA.map(committee => {
+        {COMMITTEES_DATA.map((committee, index) => {
           const { usg } = committee;
           const staff = [
             Array.isArray(usg)
@@ -37,7 +37,16 @@ export const CommitteesPage: React.FC<CommitteesPageProps> = ({ onNavigate, onSe
               {committee.acronym !== committee.name && <p className="committees-eyebrow committee-section-label">{committee.acronym}</p>}
               <div className={`committee-section-body${committee.image ? ' committee-with-image' : ''}`}>
                 {committee.image && (
-                  <img className="committee-image" src={committee.image} alt={committee.imageAlt ?? ''} loading="lazy" decoding="async" />
+                  <img
+                    className="committee-image"
+                    src={committee.image}
+                    alt={committee.imageAlt ?? ''}
+                    width={560}
+                    height={700}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={index === 0 ? 'high' : undefined}
+                    decoding="async"
+                  />
                 )}
                 <div className="committee-copy">
                   <h2 id={`title-${committee.id}`}>{committee.name}</h2>
